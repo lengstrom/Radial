@@ -3,8 +3,7 @@ function drawFilledCircle(x, y, radius, color) {
 	ctx.beginPath();
 	ctx.arc(x * settings.scale, y * settings.scale,radius * settings.scale, 0, 2 * Math.PI);
 	ctx.fill();
-	ctx.strokeStyle = color;
-	ctx.stroke();
+	ctx.closePath();
 }
 
 function drawRect(x, y, sideLength, color, angle) {
@@ -16,7 +15,6 @@ function drawRect(x, y, sideLength, color, angle) {
 	ctx.translate(x, y);
 	ctx.rotate(angle);
 	ctx.fillRect(0, 0, sideLength, sideLength);
-	ctx.fill();
 	ctx.restore();
 }
 
@@ -63,5 +61,8 @@ function render() {
 	}
 
 	drawFilledCircle(trueCanvas.width/2, trueCanvas.height/2, settings.baseRadius, '#2ecc71')
+	for (var i = 0; i < blocks.length; i++) {
+		blocks[i].draw();
+	}
 	// ctx.fillStyle = '#232323';
 }

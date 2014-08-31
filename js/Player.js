@@ -72,14 +72,14 @@ function Player(opts) {
 			this.angularVelocity = (4/180) * Math.PI * (this.angularVelocity < 0 ? -1 : 1);
 		}
 
-		this.yVelocity -= settings.gravity;
-		this.yOffset += this.yVelocity;
+		this.yVelocity -= settings.gravity * dt;
+		this.yOffset += this.yVelocity * dt;
 		if (this.yOffset <= 0) {
 			this.yOffset = 0;
 			this.jumps = 0;
 			this.yVelocity = 0;
 		}
-
+		
 		this.angle += this.angularVelocity * dt;
 		this.radius = this.baseRadius + this.yOffset;
 	};

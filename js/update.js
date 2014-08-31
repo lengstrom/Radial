@@ -1,6 +1,14 @@
 function update(dt) {
-	player1.update(dt);
+	var players = [player1];
 	if ('player2' in window) {
-		player2.update(dt);
+		players.push(player2);
+	}
+
+	for (var i in players) {
+		players[i].update(dt);
+	}
+
+	for (var i in blocks) {
+		blocks[i].update(dt);
 	}
 }

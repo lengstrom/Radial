@@ -1,5 +1,4 @@
 function init(a) {
-	//settings global
 	last = Date.now();
 
 	window.settings = {
@@ -8,6 +7,7 @@ function init(a) {
 		scale:1
 	};
 
+	blocks = [];
 	gameState = 2;
 
 	// only do if restarting the first time
@@ -56,6 +56,8 @@ function init(a) {
 		color:'#e74c3c',
 		numBodies:2
 	});
+
+	blocks.push(new Block());
 }
 
 
