@@ -4,6 +4,7 @@ function Player(opts) {
 		// baseRadius
 		// keyBindings
 	this.renderColor = "#232323";
+	this.sideLength = 20;
 	this.keyBindings = [37, 39]; //left / right arrow keys
 	this.angle = 0;
 	this.baseRadius = settings.baseRadius;
@@ -22,6 +23,6 @@ function Player(opts) {
 	}
 
 	this.draw = function() {
-		drawRect(trueCanvas.width/2 + Math.cos(this.angle) * this.baseRadius, trueCanvas.height/2 + Math.sin(this.angle) * this.baseRadius, 15, this.color, this.angle);
+		drawRect(trueCanvas.width/2 + Math.cos(this.angle) * this.baseRadius + (-this.sideLength/2) * Math.sin(2 * Math.PI - this.angle), trueCanvas.height/2 + Math.sin(this.angle) * this.baseRadius + (-this.sideLength/2) * Math.cos(2 * Math.PI - this.angle), this.sideLength, this.color, this.angle);
 	};
 }
