@@ -28,6 +28,7 @@ function Player(opts) {
 	};
 
 	this.update = function(dt) {
+		var normalizedAcceleration = dt * this.acceleration;
 		if (keys[this.keyBindings[2]]) {
 			if (this.jumps < this.maxJumps) {
 				this.jumps += 1;
@@ -38,30 +39,30 @@ function Player(opts) {
 		}
 
 		if (keys[this.keyBindings[0]]) {
-			if (this.angularVelocity > 4 * this.acceleration) {
-				this.angularVelocity -= 4 * this.acceleration;
+			if (this.angularVelocity > 4 * normalizedAcceleration) {
+				this.angularVelocity -= 4 * normalizedAcceleration;
 			} else if (this.angularVelocity > 0) {
-				this.angularVelocity = (this.angularVelocity - 4 * this.acceleration)/4;
+				this.angularVelocity = (this.angularVelocity - 4 * normalizedAcceleration)/4;
 			} else {
-				this.angularVelocity -= this.acceleration;
+				this.angularVelocity -= normalizedAcceleration;
 			}
 		}
 
 		if (keys[this.keyBindings[1]]) {
-			if (this.angularVelocity < -4 * this.acceleration) {
-				this.angularVelocity += 4 * this.acceleration;
+			if (this.angularVelocity < -4 * normalizedAcceleration) {
+				this.angularVelocity += 4 * normalizedAcceleration;
 			} else if (this.angularVelocity < 0) {
-				this.angularVelocity = (this.angularVelocity + 4 * this.acceleration)/4;
+				this.angularVelocity = (this.angularVelocity + 4 * normalizedAcceleration)/4;
 			} else {
-				this.angularVelocity += this.acceleration;
+				this.angularVelocity += normalizedAcceleration;
 			}
 		}
 
 		if (!keys[this.keyBindings[1]] && !keys[this.keyBindings[0]]) {
-			if (this.angularVelocity < -4 * this.acceleration) {
-				this.angularVelocity += 4 * this.acceleration;
-			} else if (this.angularVelocity > 4 * this.acceleration) {
-				this.angularVelocity -= 4 * this.acceleration
+			if (this.angularVelocity < -4 * normalizedAcceleration) {
+				this.angularVelocity += 4 * normalizedAcceleration;
+			} else if (this.angularVelocity > 4 * normalizedAcceleration) {
+				this.angularVelocity -= 4 * normalizedAcceleration
 			} else {
 				this.angularVelocity = 0;
 			}
