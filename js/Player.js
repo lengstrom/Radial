@@ -6,12 +6,11 @@ function Player(opts) {
 	this.renderColor = "#232323";
 	this.sideLength = 22;
 	this.keyBindings = [37, 39, 38]; //left / right arrow keys
+	this.jumps = 0;
 	this.angle = 0;
 	this.angularVelocity = 0;
 	this.yOffset = 0;
 	this.yVelocity = 0;
-	this.maxJumps = 3;
-	this.jumps = 0;
 	this.numBodies = 1;
 	this.baseRadius = settings.baseRadius;
 	this.acceleration = (1/180) * Math.PI;
@@ -95,3 +94,4 @@ function Player(opts) {
 }
 
 Player.prototype.jumpForce = 16;
+Player.prototype.maxJumps = 3;
