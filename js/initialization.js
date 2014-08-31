@@ -3,7 +3,7 @@ function init(a) {
 	last = Date.now();
 
 	window.settings = {
-		baseRadius:90,
+		baseRadius:110,
 		scale:1
 	};
 

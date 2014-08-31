@@ -4,7 +4,7 @@ function Player(opts) {
 		// baseRadius
 		// keyBindings
 	this.renderColor = "#232323";
-	this.sideLength = 20;
+	this.sideLength = 22;
 	this.keyBindings = [37, 39]; //left / right arrow keys
 	this.angle = 0;
 	this.baseRadius = settings.baseRadius;
