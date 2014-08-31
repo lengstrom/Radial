@@ -9,15 +9,24 @@ function Player(opts) {
 	this.angle = 0;
 	this.angularVelocity = 0;
 	this.yOffset = 0;
-	this.jumpForce = 15;
 	this.yVelocity = 0;
 	this.maxJumps = 3;
 	this.jumps = 0;
+	this.numBodies = 1;
 	this.baseRadius = settings.baseRadius;
 	this.acceleration = (1/180) * Math.PI;
-	for (var i in opts) {
-		this[i] = opts[i];
-	}
+	this.bodies = [];
+
+	this.init = function(opts) {
+		for (var i in opts) {
+			this[i] = opts[i];
+		}
+
+		var angleDiff = (Math.PI * 2) / this.numBodies;
+		for (var i = 0; i < this.numBodies; i++) {
+			this.bodies.push(angleDiff * i);
+		}
+	};
 
 	this.update = function(dt) {
 		if (keys[this.keyBindings[2]]) {
@@ -73,10 +82,16 @@ function Player(opts) {
 
 		this.angle += this.angularVelocity * dt;
 		this.radius = this.baseRadius + this.yOffset;
-	}
+	};
 
 	this.draw = function() {
-		drawRect(trueCanvas.width/2 + Math.cos(this.angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - this.angle), trueCanvas.height/2 + Math.sin(this.angle) * this.radius + (-this.sideLength/2) * Math.cos(2 * Math.PI - this.angle), this.sideLength, this.color, this.angle);drawRect(trueCanvas.width/2 + Math.cos(this.angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - this.angle), trueCanvas.height/2 + Math.sin(this.angle) * this.radius + (-this.sideLength/2) * Math.cos(2 * Math.PI - this.angle), this.sideLength, this.color, this.angle);
-		drawRect(trueCanvas.width/2 + Math.cos((this.angle + Math.PI)) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - (this.angle + Math.PI)), trueCanvas.height/2 + Math.sin((this.angle + Math.PI)) * this.radius + (-this.sideLength/2) * Math.cos(2 * Math.PI - (this.angle + Math.PI)), this.sideLength, this.color, (this.angle + Math.PI));drawRect(trueCanvas.width/2 + Math.cos((this.angle + Math.PI)) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - (this.angle + Math.PI)), trueCanvas.height/2 + Math.sin((this.angle + Math.PI)) * this.radius + (-this.sideLength/2) * Math.cos(2 * Math.PI - (this.angle + Math.PI)), this.sideLength, this.color, (this.angle + Math.PI));
+		for (var i = 0; i < this.bodies.length; i++) {
+			var angle = this.bodies[i] + this.angle;
+			drawRect(trueCanvas.width/2 + Math.cos(angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - angle), trueCanvas.height/2 + Math.sin(angle) * this.radius + (-this.sideLength/2) * Math.cos(2 * Math.PI - angle), this.sideLength, this.color, angle);drawRect(trueCanvas.width/2 + Math.cos(angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - angle), trueCanvas.height/2 + Math.sin(angle) * this.radius + (-this.sideLength/2) * Math.cos(2 * Math.PI - angle), this.sideLength, this.color, angle);
+		}
 	};
+
+	this.init(opts);
 }
+
+Player.prototype.jumpForce = 16;

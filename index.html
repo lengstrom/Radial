@@ -11,9 +11,14 @@
 	<body>
 		<canvas id = 'c'></canvas>
 	</body>
+	<script src='vendor/dat.gui.min.js'></script>
 	<script src='js/render.js'></script>
 	<script src='js/main.js'></script>
 	<script src='js/update.js'></script>
 	<script src='js/Player.js'></script>
 	<script src='js/initialization.js'></script> 
+	<script>
+		var gui = new dat.GUI();
+		gui.add(Player.prototype, 'jumpForce', 0, 30);
+	</script>
 </html>

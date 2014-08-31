@@ -46,13 +46,15 @@ function init(a) {
 
 	// change later
 	player1 = new Player({
-		color:'#3498db'
+		color:'#3498db',
+		numBodies:2
 	});
 
 	player2 = new Player({
 		angle:Math.PI/2,
 		keyBindings:[65, 68, 87], // a / d
-		color:'#e74c3c'
+		color:'#e74c3c',
+		numBodies:2
 	});
 }
 
