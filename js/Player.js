@@ -1,0 +1,27 @@
+function Player(opts) {
+	// options:
+		// angle
+		// baseRadius
+		// keyBindings
+	this.renderColor = "#232323";
+	this.keyBindings = [37, 39]; //left / right arrow keys
+	this.angle = 0;
+	this.baseRadius = settings.baseRadius;
+	for (var i in opts) {
+		this[i] = opts[i];
+	}
+
+	this.update = function() {
+		if (keys[this.keyBindings[0]]) {
+			this.angle -= (5/180) * Math.PI;
+		}
+
+		if (keys[this.keyBindings[1]]) {
+			this.angle += (5/180) * Math.PI;
+		}
+	}
+
+	this.draw = function() {
+		drawRect(trueCanvas.width/2 + Math.cos(this.angle) * this.baseRadius, trueCanvas.height/2 + Math.sin(this.angle) * this.baseRadius, 15, this.color, this.angle);
+	};
+}
