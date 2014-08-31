@@ -10,6 +10,7 @@ function animLoop() {
 
 		case 2: //gameplay
 			update(dt);
+			last = now;
 			break;
 
 		case 3: //pause

@@ -3,6 +3,8 @@ function drawFilledCircle(x, y, radius, color) {
 	ctx.beginPath();
 	ctx.arc(x * settings.scale, y * settings.scale,radius * settings.scale, 0, 2 * Math.PI);
 	ctx.fill();
+	ctx.strokeStyle = color;
+	ctx.stroke();
 }
 
 function drawRect(x, y, sideLength, color, angle) {

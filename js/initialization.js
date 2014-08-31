@@ -3,6 +3,7 @@ function init(a) {
 	last = Date.now();
 
 	window.settings = {
+		gravity:1,
 		baseRadius:110,
 		scale:1
 	};
@@ -26,6 +27,12 @@ function init(a) {
 			keys[e.keyCode] = 1;
 		});
 
+		window.addEventListener('blur', function(e) {
+			for (var i = 0; i < keys.length; i++) {
+				keys[i] = false;
+			}
+		});
+
 		document.addEventListener('keyup', function(e) {
 			keys[e.keyCode] = 0;
 		});
@@ -43,8 +50,8 @@ function init(a) {
 	});
 
 	player2 = new Player({
-		angle:Math.PI,
-		keyBindings:[65, 68], // a / d
+		angle:Math.PI/2,
+		keyBindings:[65, 68, 87], // a / d
 		color:'#e74c3c'
 	});
 }
