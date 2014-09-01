@@ -3,15 +3,18 @@ function init(a) {
 
 	window.settings = {
 		gravity:1,
+		startRadius:110,
 		baseRadius:110,
 		scale:1,
 		shakeMagnitude:6 * (window.devicePixelRatio ? window.devicePixelRatio : 1),
 		baseIter:5
 	};
 
+	colors = ['#e67e22', '#c0392b', '#f1c40f', '#3498db', '#ecf0f1'];
 	blocks = [];
 	shakes = [];
 	gdx = 0;
+	gdr = 0;
 	gdy = 0;
 	gameState = 2;
 	waveGen = new WaveGen();
@@ -63,17 +66,17 @@ function init(a) {
 	// change later
 	player1 = new Player({
 		color:'#3498db',
-		numBodies:2
+		numBodies:1
 	});
 
-	player2 = new Player({
-		angle:Math.PI/2,
-		keyBindings:[65, 68, 87], // a / d
-		color:'#e74c3c',
-		numBodies:2
-	});
+	// player2 = new Player({
+	// 	angle:Math.PI/2,
+	// 	keyBindings:[65, 68, 87], // a / d
+	// 	color:'#e74c3c',
+	// 	numBodies:1
+	// });
 
-	blocks.push(new Block());
+	blocks.push();
 }
 
 

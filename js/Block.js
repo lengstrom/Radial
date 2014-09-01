@@ -4,7 +4,7 @@ function Block(opts) {
 	this.initTime = 25;
 	this.counter = 0;
 	this.parent = false;
-	this.blockHeight = 20;
+	this.blockHeight = 25;
 	this.endTime = 10;
 	this.iter = 5;
 	this.color = '#f1c40f';
@@ -12,12 +12,13 @@ function Block(opts) {
 	this.distFromCenter = 400;
 	for (var i in opts) {
 		this[i] = opts[i];
+		debugger;
 	}
 
 	this.draw = function() {
 		switch (this.state) {
 			case 0:
-				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle - this.angularWidth/2) + (this.angularWidth) * (this.counter/this.initTime), (this.angle - this.angularWidth/2), this.blockHeight, this.distFromCenter, '#1abc9c');
+				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle - this.angularWidth/2) + (this.angularWidth) * (this.counter/this.initTime), (this.angle - this.angularWidth/2), this.blockHeight, this.distFromCenter, this.color);
 				var op = (1 - (this.counter)/this.initTime);
 				if (op > 0) {
 					drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle - this.angularWidth/2) + (this.angularWidth) * (this.counter/this.initTime), (this.angle - this.angularWidth/2), this.blockHeight, this.distFromCenter, '#FFFFFF', op);
@@ -25,7 +26,7 @@ function Block(opts) {
 				break;
 
 			case 1:
-				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, this.angle + this.angularWidth/2, this.angle - this.angularWidth/2, this.blockHeight, this.distFromCenter, '#1abc9c');
+				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, this.angle + this.angularWidth/2, this.angle - this.angularWidth/2, this.blockHeight, this.distFromCenter, this.color);
 				break;
 
 			case 2:
