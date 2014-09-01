@@ -67,7 +67,7 @@ function init(a) {
 	// change later
 	player1 = new Player({
 		color:'#3498db',
-		numBodies:1
+		numBodies:2
 	});
 
 	// player2 = new Player({

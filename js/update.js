@@ -20,7 +20,7 @@ function update(dt, now) {
 	//scale gdx accordingly
 	gdx *= settings.scale;
 	gdy *= settings.scale;
-	gdr = Math.sin(cumulativeTime) * 10;
+	// gdr = Math.sin(cumulativeTime) * 10;
 	settings.baseRadius = settings.startRadius + gdr;
 
 	var players = [player1];
