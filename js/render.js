@@ -76,12 +76,12 @@ function render() {
 	// drawRect(300, 300, 100, "#232323", 30)
 	ctx.fillStyle='#2c3e50';
 	ctx.fillRect(0,0,trueCanvas.width,trueCanvas.height);
-	drawFilledCircle(trueCanvas.width/2, trueCanvas.height/2, settings.baseRadius + .5, '#2ecc71')
 	player1.draw();
 	if ('player2' in window) {
 		player2.draw();
 	}
 
+	drawFilledCircle(trueCanvas.width/2, trueCanvas.height/2, settings.baseRadius + .5, '#2ecc71')
 	for (var i = 0; i < blocks.length; i++) {
 		blocks[i].draw();
 	}

@@ -3,6 +3,7 @@ function Block(opts) {
 	this.angle = 0;
 	this.initTime = 25;
 	this.counter = 0;
+	this.parent = false;
 	this.blockHeight = 20;
 	this.endTime = 10;
 	this.iter = 5;
@@ -56,6 +57,9 @@ function Block(opts) {
 				this.counter += dt;
 				if (this.counter > this.endTime) {
 					blocks.splice(blocks.indexOf(this), 1);
+					if (this.parent) {
+						this.parent.blocks.splice(this.parent.blocks.indexOf(this), 1);
+					}
 				}
 				break;
 		}

@@ -1,7 +1,8 @@
 function update(dt) {
-	gdx = 0;
+	gdx = 0; // reset global shifts
 	gdy = 0;
 
+	//shaking effects
 	for (var i = 0; i < shakes.length; i++) {
 		var r = shakes[i].m * settings.scale;
 		gdx += Math.cos(shakes[i].a) * r;
@@ -14,13 +15,17 @@ function update(dt) {
 		}
 	}
 
+	//scale gdx accordingly
 	gdx *= settings.scale;
 	gdy *= settings.scale;
 
+	// 
 	var players = [player1];
 	if ('player2' in window) {
 		players.push(player2);
 	}
+
+	waveGen.update(dt);
 
 	for (var i = 0; i < players.length; i++) {
 		players[i].update(dt);

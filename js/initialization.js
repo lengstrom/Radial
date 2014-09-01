@@ -13,6 +13,7 @@ function init(a) {
 	gdx = 0;
 	gdy = 0;
 	gameState = 2;
+	waveGen = new WaveGen();
 
 	// only do if restarting the first time
 	if (a) {
@@ -61,14 +62,14 @@ function init(a) {
 	// change later
 	player1 = new Player({
 		color:'#3498db',
-		numBodies:5
+		numBodies:2
 	});
 
 	player2 = new Player({
 		angle:Math.PI/2,
 		keyBindings:[65, 68, 87], // a / d
 		color:'#e74c3c',
-		numBodies:5
+		numBodies:2
 	});
 
 	blocks.push(new Block());
