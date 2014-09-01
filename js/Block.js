@@ -47,7 +47,7 @@ function Block(opts) {
 			case 1:
 				console.log(this.iter * dt);
 				this.distFromCenter -= this.iter * dt;
-				if (this.distFromCenter <= settings.baseRadius) {
+				if (this.distFromCenter <= settings.startRadius) {
 					this.distFromCenter = settings.baseRadius;
 					shakes.push({a:this.angle, m:settings.shakeMagnitude});
 					this.state = 2;
@@ -55,6 +55,7 @@ function Block(opts) {
 				break;
 
 			case 2:
+				this.distFromCenter = settings.baseRadius;
 				this.counter += dt;
 				if (this.counter > this.endTime) {
 					this.state = 3;
