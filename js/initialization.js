@@ -67,15 +67,15 @@ function init(a) {
 	// change later
 	player1 = new Player({
 		color:'#3498db',
-		numBodies:2
+		numBodies:1
 	});
 
-	// player2 = new Player({
-	// 	angle:Math.PI/2,
-	// 	keyBindings:[65, 68, 87], // a / d
-	// 	color:'#e74c3c',
-	// 	numBodies:1
-	// });
+	player2 = new Player({
+		angle:Math.PI/2,
+		keyBindings:[65, 68, 87], // a / d
+		color:'#e74c3c',
+		numBodies:1
+	});
 
 	blocks.push();
 }

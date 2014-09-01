@@ -45,7 +45,6 @@ function Block(opts) {
 				break;
 
 			case 1:
-				console.log(this.iter * dt);
 				this.distFromCenter -= this.iter * dt;
 				if (this.distFromCenter <= settings.startRadius) {
 					this.distFromCenter = settings.baseRadius;
