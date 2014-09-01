@@ -28,7 +28,17 @@ function init(a) {
 
 		//input
 		document.addEventListener('keydown', function(e) {
-			keys[e.keyCode] = 1;
+			if (e.keyCode == 13) {
+				init();
+			} else {
+				keys[e.keyCode] = 1;
+			}
+		});
+
+		window.addEventListener('blur', function(e) {
+			for (var i = 0; i < keys.length; i++) {
+				keys[i] = false;
+			}
 		});
 
 		window.addEventListener('blur', function(e) {
