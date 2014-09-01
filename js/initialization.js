@@ -5,7 +5,8 @@ function init(a) {
 		gravity:1,
 		baseRadius:110,
 		scale:1,
-		shakeMagnitude:10 * (window.devicePixelRatio ? window.devicePixelRatio : 1)
+		shakeMagnitude:6 * (window.devicePixelRatio ? window.devicePixelRatio : 1),
+		baseIter:5
 	};
 
 	blocks = [];

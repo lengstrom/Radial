@@ -5,13 +5,12 @@ function SingleGeneration(opts) {
 	for (var i in opts) {
 		this[i] = opts[i];
 	}
-
+	var angleMeasure = (Math.PI * 2)/Math.floor(Math.random() * 4);
 	this.update = function(dt) {
 		this.counter += dt;
 		if (this.counter > 60 * this.speedModifier) {
 			this.counter = 0;
-			debugger;
-			var newBlock = new Block({parent:this});
+			var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:});
 			blocks.push(newBlock);
 			this.blocks.push(newBlock);
 		}

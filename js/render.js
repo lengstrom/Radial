@@ -40,36 +40,36 @@ function drawRect(x, y, sideLength, color, angle) {
 }
 
 function scaleCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
 
-    if (canvas.height > canvas.width) {
-        settings.scale = (canvas.width / 800);
-    } else {
-        settings.scale = (canvas.height / 800);
-    }
+	if (canvas.height > canvas.width) {
+		settings.scale = (canvas.width / 800);
+	} else {
+		settings.scale = (canvas.height / 800);
+	}
 
-    trueCanvas = {
-        width: canvas.width,
-        height: canvas.height
-    };
+	trueCanvas = {
+		width: canvas.width,
+		height: canvas.height
+	};
 
-    if (window.devicePixelRatio) {
-        var cw = canvas.width;
-        var ch = canvas.height;
+	if (window.devicePixelRatio) {
+		var cw = canvas.width;
+		var ch = canvas.height;
 
-        canvas.width = cw * window.devicePixelRatio;
-        canvas.height = ch * window.devicePixelRatio;
-       	canvas.style.width = cw;
-       	canvas.style.height = ch;
+		canvas.width = cw * window.devicePixelRatio;
+		canvas.height = ch * window.devicePixelRatio;
+		canvas.style.width = cw;
+		canvas.style.height = ch;
 
-        trueCanvas = {
-            width: cw,
-            height: ch
-        };
+		trueCanvas = {
+			width: cw,
+			height: ch
+		};
 
-        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    }
+		ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+	}
 }
 
 function render() {
