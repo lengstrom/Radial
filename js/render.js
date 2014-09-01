@@ -5,8 +5,6 @@ function drawConeSectionFromCenter(cx, cy, startAngle, endAngle, blockHeight, di
 	}
 
 	if (op) ctx.globalAlpha = op;
-	cx *= settings.scale;
-	cy *= settings.scale;
 	blockHeight *= settings.scale;
 	distance *= settings.scale;
 
@@ -24,20 +22,20 @@ function drawConeSectionFromCenter(cx, cy, startAngle, endAngle, blockHeight, di
 function drawFilledCircle(x, y, radius, color) {
 	ctx.fillStyle = color;
 	ctx.beginPath();
-	ctx.arc((x + gdx) * settings.scale, (y + gdy) * settings.scale,radius * settings.scale, 0, 2 * Math.PI);
+	ctx.arc(x + gdx, y + gdy,radius * settings.scale, 0, 2 * Math.PI);
 	ctx.fill();
 	ctx.closePath();
 }
 
 function drawRect(x, y, sideLength, color, angle) {
-	x = (x + gdx) + settings.scale;
-	y = (y + gdy) + settings.scale;
-	sideLength *= settings.scale;
+	x = (x + gdx);
+	y = (y + gdy);
 	ctx.save();
 	ctx.fillStyle = color;
 	ctx.translate(x, y);
 	ctx.rotate(angle);
-	ctx.fillRect(0, 0, sideLength, sideLength);
+	var sl = sideLength * settings.scale;
+	ctx.fillRect(0, 0, sl, sl);
 	ctx.restore();
 }
 
@@ -77,7 +75,7 @@ function scaleCanvas() {
 function render() {
 	// drawRect(300, 300, 100, "#232323", 30)
 	ctx.fillStyle='#2c3e50';
-	ctx.fillRect(0,0,trueCanvas.width * settings.scale,trueCanvas.height * settings.scale);
+	ctx.fillRect(0,0,trueCanvas.width,trueCanvas.height);
 	drawFilledCircle(trueCanvas.width/2, trueCanvas.height/2, settings.baseRadius + .5, '#2ecc71')
 	player1.draw();
 	if ('player2' in window) {

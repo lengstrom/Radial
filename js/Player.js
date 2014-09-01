@@ -87,7 +87,8 @@ function Player(opts) {
 	this.draw = function() {
 		for (var i = 0; i < this.bodies.length; i++) {
 			var angle = this.bodies[i] + this.angle;
-			drawRect(trueCanvas.width/2 + Math.cos(angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - angle), trueCanvas.height/2 + Math.sin(angle) * this.radius + (-this.sideLength/2) * Math.cos(2 * Math.PI - angle), this.sideLength, this.color, angle);drawRect(trueCanvas.width/2 + Math.cos(angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - angle), trueCanvas.height/2 + Math.sin(angle) * this.radius + (-this.sideLength/2) * Math.cos(2 * Math.PI - angle), this.sideLength, this.color, angle);
+			var ss = settings.scale;
+			drawRect(trueCanvas.width/2 + (Math.cos(angle) * this.radius * ss) + (-this.sideLength/2) * Math.sin(2 * Math.PI - angle) * ss, trueCanvas.height/2 + Math.sin(angle) * this.radius * ss + (-this.sideLength/2) * Math.cos(2 * Math.PI - angle) * ss, this.sideLength, this.color, angle);drawRect(trueCanvas.width/2 + ss * Math.cos(angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - angle) * ss, trueCanvas.height/2 + Math.sin(angle) * this.radius * ss + (-this.sideLength/2) * Math.cos(2 * Math.PI - angle) * ss, this.sideLength, this.color, angle);
 		}
 	};
 

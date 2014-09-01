@@ -44,8 +44,8 @@ function Block(opts) {
 				break;
 
 			case 1:
-				this.distFromCenter -= this.iter * dt * settings.scale;
-				if (this.distFromCenter * settings.scale <= settings.baseRadius * settings.scale) {
+				this.distFromCenter -= this.iter * dt;
+				if (this.distFromCenter <= settings.baseRadius) {
 					this.distFromCenter = settings.baseRadius;
 					shakes.push({a:this.angle, m:settings.shakeMagnitude});
 					this.state = 2;

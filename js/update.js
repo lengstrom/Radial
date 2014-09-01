@@ -14,6 +14,9 @@ function update(dt) {
 		}
 	}
 
+	gdx *= settings.scale;
+	gdy *= settings.scale;
+
 	var players = [player1];
 	if ('player2' in window) {
 		players.push(player2);
