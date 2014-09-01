@@ -7,6 +7,7 @@ function Block(opts) {
 	this.blockHeight = 25;
 	this.endTime = 10;
 	this.iter = 5;
+	this.shouldShake = 1;
 	this.color = '#f1c40f';
 	this.angularWidth = Math.PI/5;
 	this.distFromCenter = 400;
@@ -48,7 +49,7 @@ function Block(opts) {
 				this.distFromCenter -= this.iter * dt;
 				if (this.distFromCenter <= settings.startRadius) {
 					this.distFromCenter = settings.baseRadius;
-					shakes.push({a:this.angle, m:settings.shakeMagnitude});
+					if (this.shouldShake) shakes.push({a:this.angle, m:settings.shakeMagnitude});
 					this.state = 2;
 				}
 				break;

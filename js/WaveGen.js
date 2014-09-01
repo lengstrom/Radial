@@ -30,17 +30,18 @@ function AlternateGeneration(opts) {
 	this.counter = 0;
 	this.blocks = [];
 	this.speedModifier = 1;
+	this.shouldShake = 0;
 	this.angle = false;
 	for (var i in opts) {
 		this[i] = opts[i];
 	}
 
-	var num = Math.floor(Math.random() * 4 + 3) * 2;
+	var num = Math.floor(Math.random() * 3 + 3) * 2;
 	var angleMeasure = (Math.PI * 2)/num;
 	this.update = function(dt) {
 		this.counter += dt;
 		if (this.counter > 60 * this.speedModifier) {
-			debugger;
+			this.shouldShake = 0;
 			if (this.angle === false) {
 				this.angle = Math.random() * Math.PI * 2;
 			} else {
@@ -51,7 +52,8 @@ function AlternateGeneration(opts) {
 			var color = colors[Math.floor(Math.random() * colors.length)];
 			for (var i = 0; i < num; i++) {
 				if (i % 2 == 0) {
-					var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter, angle:this.angle + i * angleMeasure, color:color});
+					var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter, angle:this.angle + i * angleMeasure, color:color, shouldShake:this.shouldShake});
+					this.shouldShake = 1;
 					blocks.push(newBlock);
 					this.blocks.push(newBlock);
 				}
@@ -64,6 +66,7 @@ function AlternateGeneration(opts) {
 function RandomMultipleGeneration(opts) {
 	this.counter = 0;
 	this.blocks = [];
+	this.shouldShake = 0;
 	this.speedModifier = 1;
 	var angle = Math.random() * Math.PI * 2;
 	for (var i in opts) {
@@ -75,6 +78,7 @@ function RandomMultipleGeneration(opts) {
 	this.update = function(dt) {
 		this.counter += dt;
 		if (this.counter > 60 * this.speedModifier) {
+			this.shouldShake = 0;
 			this.counter = 0;
 			var tempAngle = Math.random() * Math.PI * 2;
 			while (Math.abs(tempAngle - angle) < Math.PI/2) {
@@ -95,7 +99,8 @@ function RandomMultipleGeneration(opts) {
 			var color = colors[Math.floor(Math.random() * colors.length)];
 			for (var i = 0; i < num; i++) {
 				if (blocksToLeaveOpen.indexOf(i) == -1) {
-					var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter, angle:angle + i * angleMeasure, color:color});
+					var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter, angle:angle + i * angleMeasure, color:color, shouldShake:this.shouldShake});
+					this.shouldShake = 1;
 					blocks.push(newBlock);
 					this.blocks.push(newBlock);
 				}
