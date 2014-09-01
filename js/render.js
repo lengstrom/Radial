@@ -1,14 +1,37 @@
+function drawConeSectionFromCenter(cx, cy, startAngle, endAngle, blockHeight, distance, color, op) {
+	if (distance <= settings.baseRadius + .00000001) {
+		cx += gdx;
+		cy += gdy;
+	}
+
+	if (op) ctx.globalAlpha = op;
+	cx *= settings.scale;
+	cy *= settings.scale;
+	blockHeight *= settings.scale;
+	distance *= settings.scale;
+
+	ctx.beginPath();
+	ctx.fillStyle = color;
+	ctx.arc(cx, cy, distance + blockHeight, startAngle, endAngle, 1);
+	ctx.lineTo(cx + Math.cos(endAngle) * distance, cy + Math.sin(endAngle) * distance);
+	ctx.arc(cx, cy, distance, endAngle, startAngle, 0);
+	ctx.lineTo(cx + Math.cos(startAngle) * (distance + blockHeight), cy + Math.sin(startAngle) * (distance + blockHeight));
+	ctx.fill();
+	ctx.closePath();
+	if (op) ctx.globalAlpha = 1;
+}
+
 function drawFilledCircle(x, y, radius, color) {
 	ctx.fillStyle = color;
 	ctx.beginPath();
-	ctx.arc(x * settings.scale, y * settings.scale,radius * settings.scale, 0, 2 * Math.PI);
+	ctx.arc((x + gdx) * settings.scale, (y + gdy) * settings.scale,radius * settings.scale, 0, 2 * Math.PI);
 	ctx.fill();
 	ctx.closePath();
 }
 
 function drawRect(x, y, sideLength, color, angle) {
-	x *= settings.scale;
-	y *= settings.scale;
+	x = (x + gdx) + settings.scale;
+	y = (y + gdy) + settings.scale;
 	sideLength *= settings.scale;
 	ctx.save();
 	ctx.fillStyle = color;

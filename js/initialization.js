@@ -4,10 +4,14 @@ function init(a) {
 	window.settings = {
 		gravity:1,
 		baseRadius:110,
-		scale:1
+		scale:1,
+		shakeMagnitude:10 * (window.devicePixelRatio ? window.devicePixelRatio : 1)
 	};
 
 	blocks = [];
+	shakes = [];
+	gdx = 0;
+	gdy = 0;
 	gameState = 2;
 
 	// only do if restarting the first time
