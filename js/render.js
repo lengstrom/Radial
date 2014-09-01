@@ -83,6 +83,7 @@ function render() {
 
 	drawFilledCircle(trueCanvas.width/2, trueCanvas.height/2, settings.baseRadius + .5, '#2ecc71')
 	for (var i = 0; i < blocks.length; i++) {
+		console.log(blocks[i].iter);
 		blocks[i].draw();
 	}
 	// ctx.fillStyle = '#232323';

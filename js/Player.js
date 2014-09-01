@@ -12,7 +12,6 @@ function Player(opts) {
 	this.yOffset = 0;
 	this.yVelocity = 0;
 	this.numBodies = 1;
-	this.baseRadius = settings.baseRadius;
 	this.acceleration = (1/180) * Math.PI;
 	this.bodies = [];
 
@@ -68,8 +67,8 @@ function Player(opts) {
 			}
 		}
 
-		if (Math.abs(this.angularVelocity) > (4/180) * Math.PI) {
-			this.angularVelocity = (4/180) * Math.PI * (this.angularVelocity < 0 ? -1 : 1);
+		if (Math.abs(this.angularVelocity) > (5/180) * Math.PI) {
+			this.angularVelocity = (5/180) * Math.PI * (this.angularVelocity < 0 ? -1 : 1);
 		}
 
 		this.yVelocity -= settings.gravity * dt;
@@ -81,7 +80,7 @@ function Player(opts) {
 		}
 		
 		this.angle += this.angularVelocity * dt;
-		this.radius = this.baseRadius + this.yOffset;
+		this.radius = settings.baseRadius + this.yOffset;
 	};
 
 	this.draw = function() {

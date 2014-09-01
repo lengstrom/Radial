@@ -1,16 +1,17 @@
 function init(a) {
 	last = Date.now();
+	cumulativeTime = 0;
 
 	window.settings = {
 		gravity:1,
 		startRadius:110,
 		baseRadius:110,
 		scale:1,
-		shakeMagnitude:6 * (window.devicePixelRatio ? window.devicePixelRatio : 1),
+		shakeMagnitude:10 * (window.devicePixelRatio ? window.devicePixelRatio : 1),
 		baseIter:5
 	};
 
-	colors = ['#e67e22', '#c0392b', '#f1c40f', '#3498db', '#ecf0f1'];
+	colors = ["#e74c3c", "#f1c40f", "#3498db"];
 	blocks = [];
 	shakes = [];
 	gdx = 0;

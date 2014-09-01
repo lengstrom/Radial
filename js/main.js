@@ -9,7 +9,7 @@ function animLoop() {
 			break;
 
 		case 2: //gameplay
-			update(dt);
+			update(dt, now);
 			last = now;
 			break;
 

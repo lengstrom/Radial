@@ -12,25 +12,24 @@ function Block(opts) {
 	this.distFromCenter = 400;
 	for (var i in opts) {
 		this[i] = opts[i];
-		debugger;
 	}
 
 	this.draw = function() {
 		switch (this.state) {
 			case 0:
-				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle - this.angularWidth/2) + (this.angularWidth) * (this.counter/this.initTime), (this.angle - this.angularWidth/2), this.blockHeight, this.distFromCenter, this.color);
+				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle - this.angularWidth/2) + (this.angularWidth) * (this.counter/this.initTime), (this.angle - this.angularWidth/2), this.blockHeight, this.distFromCenter + gdr, this.color);
 				var op = (1 - (this.counter)/this.initTime);
 				if (op > 0) {
-					drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle - this.angularWidth/2) + (this.angularWidth) * (this.counter/this.initTime), (this.angle - this.angularWidth/2), this.blockHeight, this.distFromCenter, '#FFFFFF', op);
+					drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle - this.angularWidth/2) + (this.angularWidth) * (this.counter/this.initTime), (this.angle - this.angularWidth/2), this.blockHeight, this.distFromCenter + gdr, '#FFFFFF', op);
 				}
 				break;
 
 			case 1:
-				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, this.angle + this.angularWidth/2, this.angle - this.angularWidth/2, this.blockHeight, this.distFromCenter, this.color);
+				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, this.angle + this.angularWidth/2, this.angle - this.angularWidth/2, this.blockHeight, this.distFromCenter + gdr, this.color);
 				break;
 
 			case 2:
-				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, this.angle + this.angularWidth/2, this.angle - this.angularWidth/2, this.blockHeight, this.distFromCenter, '#FFFFFF', 1 - ((this.counter)/this.endTime));
+				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, this.angle + this.angularWidth/2, this.angle - this.angularWidth/2, this.blockHeight, this.distFromCenter + gdr, '#FFFFFF', 1 - ((this.counter)/this.endTime));
 				break;
 		}
 	};
@@ -46,6 +45,7 @@ function Block(opts) {
 				break;
 
 			case 1:
+				console.log(this.iter * dt);
 				this.distFromCenter -= this.iter * dt;
 				if (this.distFromCenter <= settings.baseRadius) {
 					this.distFromCenter = settings.baseRadius;
@@ -57,10 +57,7 @@ function Block(opts) {
 			case 2:
 				this.counter += dt;
 				if (this.counter > this.endTime) {
-					blocks.splice(blocks.indexOf(this), 1);
-					if (this.parent) {
-						this.parent.blocks.splice(this.parent.blocks.indexOf(this), 1);
-					}
+					this.state = 3;
 				}
 				break;
 		}

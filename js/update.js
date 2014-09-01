@@ -1,6 +1,8 @@
-function update(dt) {
+function update(dt, now) {
+	cumulativeTime += dt/4;
 	gdx = 0; // reset global shifts
 	gdy = 0;
+	gdr = 0;
 
 	//shaking effects
 	for (var i = 0; i < shakes.length; i++) {
@@ -18,8 +20,9 @@ function update(dt) {
 	//scale gdx accordingly
 	gdx *= settings.scale;
 	gdy *= settings.scale;
+	gdr = Math.sin(cumulativeTime) * 10;
+	settings.baseRadius = settings.startRadius + gdr;
 
-	// 
 	var players = [player1];
 	if ('player2' in window) {
 		players.push(player2);
@@ -33,5 +36,9 @@ function update(dt) {
 
 	for (var i = 0; i < blocks.length; i++) {
 		blocks[i].update(dt);
+		if (blocks[i].state == 3) {
+			blocks.splice(i, 1);
+			i--;
+		}
 	}
 }
