@@ -37,7 +37,7 @@ function SpiralGeneration(opts) {
 	var num = Math.floor(Math.random() * 5 + 2);
 	var angleMeasure = Math.random() * (1/10) * Math.PI * 2 + (1/20) * Math.PI * 2;
 	angle -= angleMeasure;
-	this.speedModifier = .8755;
+	this.speedModifier = .875545;
 	this.update = function(dt) {
 		if (this.blocks.length == 0 || (settings.baseDistFromCenter - Block.prototype.blockHeight)/(settings.baseIter * this.speedModifier) + settings.initTime + .5 >= (this.blocks[this.blocks.length - 1].distFromCenter)/(settings.baseIter * this.speedModifier) + (settings.initTime - this.blocks[this.blocks.length - 1].counter)) {
 			angle += angleMeasure;
