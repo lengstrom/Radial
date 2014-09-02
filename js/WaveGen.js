@@ -111,11 +111,18 @@ function SpiralGeneration(opts) {
 
 	var angleMeasure = Math.random() * (1/10) * Math.PI * 2 + (1/20) * Math.PI * 2;
 	angle -= angleMeasure;
+	this.switch = 0;
 	this.speedModifier = .445;
 	this.speedModifier *= ((1/10) * Math.PI * 2 + (1/20) * Math.PI * 2)/angleMeasure;
 	this.update = function(dt) {
 		if (this.blocks.length == 0 || (settings.baseDistFromCenter - Block.prototype.blockHeight)/(settings.baseIter * this.speedModifier) + settings.initTime + .5 >= (this.blocks[this.blocks.length - 1].distFromCenter)/(settings.baseIter * this.speedModifier) + (settings.initTime - this.blocks[this.blocks.length - 1].counter)) {
-			angle += angleMeasure;
+			this.switch += 1;
+			if (this.switch % 60 > 30) {
+				angle -= angleMeasure;
+			} else {
+				angle += angleMeasure
+			}
+
 			newDist = settings.baseDistFromCenter;
 			if (this.blocks.length > 0) {
 				newDist = this.blocks[this.blocks.length - 1].distFromCenter + Block.prototype.blockHeight;
