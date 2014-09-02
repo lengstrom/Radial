@@ -223,8 +223,10 @@ function waveAugmentation(wave) {
 	this.wave = wave;
 	this.update = function(dt) {
 		for (var i = 0; i < wave.blocks.length; i++) {
-			if (blocks[i]) {
-				blocks[i].angle += 2 * (Math.PI / 1111) * dt;
+			if (wave.blocks[i]) {
+				wave.blocks[i].angle += 2 * (Math.PI / 1111) * dt;
+			} else {
+				debugger;
 			}
 		}
 	};
