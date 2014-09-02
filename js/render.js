@@ -27,9 +27,9 @@ function drawFilledCircle(x, y, radius, color) {
 	ctx.closePath();
 }
 
-function drawRect(x, y, sideLength, color, angle) {
-	x = (x + gdx);
-	y = (y + gdy);
+function drawRect(x, y, sideLength, color, angle, shouldG) {
+	x = (x + gdx * shouldG);
+	y = (y + gdy * shouldG);
 	ctx.save();
 	ctx.fillStyle = color;
 	ctx.translate(x, y);
