@@ -117,11 +117,11 @@ function SpiralGeneration(opts) {
 	this.update = function(dt) {
 		if (this.blocks.length == 0 || (settings.baseDistFromCenter - Block.prototype.blockHeight)/(settings.baseIter * this.speedModifier) + settings.initTime + .5 >= (this.blocks[this.blocks.length - 1].distFromCenter)/(settings.baseIter * this.speedModifier) + (settings.initTime - this.blocks[this.blocks.length - 1].counter)) {
 			this.switch += 1;
-			if (this.switch % 60 > 30) {
-				angle -= angleMeasure;
-			} else {
+			// if (this.switch % 60 > 30) {
+			// 	angle -= angleMeasure;
+			// } else {
 				angle += angleMeasure
-			}
+			// }
 
 			newDist = settings.baseDistFromCenter;
 			if (this.blocks.length > 0) {
