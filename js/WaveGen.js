@@ -26,6 +26,83 @@ function SingleGeneration(opts) {
 	};
 }
 
+function DoubleGeneration(opts) {
+	this.counter = 0;
+	this.blocks = [];
+	this.speedModifier = 1;
+	this.shouldShake = 0;
+	var angle = Math.random() * Math.PI * 2;
+
+	for (var i in opts) {
+		this[i] = opts[i];
+	}
+	var num = Math.floor(Math.random() * 5 + 3);
+	var angleMeasure = (Math.PI * 2)/num;
+	this.update = function(dt) {
+		this.counter += dt;
+		if (this.counter > 30 * this.speedModifier * (num)/7) {
+			this.shouldShake = 0;
+			this.counter = 0;
+			var tempAngle = Math.random() * Math.PI * 2;
+			while (Math.abs(tempAngle - angle) < angleMeasure * (3/4)) {
+				tempAngle = Math.random() * Math.PI * 2;
+			}
+
+			angle = tempAngle;
+			var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter * this.speedModifier, angle:angle, color:colors[Math.floor(Math.random() * colors.length)], shouldShake:this.shouldShake});
+			blocks.push(newBlock);
+			this.blocks.push(newBlock);
+			this.shouldShake = 1;
+			newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter * this.speedModifier, angle:angle + Math.PI, color:colors[Math.floor(Math.random() * colors.length)], shouldShake:this.shouldShake});
+			blocks.push(newBlock);
+			this.blocks.push(newBlock);
+		}
+	};
+}
+
+function TripleGeneration(opts) {
+	this.counter = 0;
+	this.blocks = [];
+	this.speedModifier = 1;
+	this.shouldShake = 0;
+	var angle = Math.random() * Math.PI * 2;
+
+	for (var i in opts) {
+		this[i] = opts[i];
+	}
+	var num = Math.floor(Math.random() * 4 + 2) * 3;
+	var angleMeasure = (Math.PI * 2)/num;
+	this.update = function(dt) {
+		debugger;
+		this.counter += dt;
+		if (this.counter > 30 * this.speedModifier - (1 - 1 * (num + 6)/12) * 70) {
+			this.shouldShake = 0;
+			this.counter = 0;
+			var tempAngle = Math.random() * Math.PI * 2;
+			var ct = 0;
+			while (Math.abs(tempAngle - angle) < angleMeasure * (3/4)) {
+				ct++;
+				tempAngle = Math.random() * Math.PI * 2;
+				if (ct > 100) debugger;
+			}
+
+			angle = tempAngle;
+			var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter * this.speedModifier, angle:angle, color:colors[Math.floor(Math.random() * colors.length)], shouldShake:this.shouldShake});
+			blocks.push(newBlock);
+			this.blocks.push(newBlock);
+			this.shouldShake = 1;
+
+			newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter * this.speedModifier, angle:angle + (2 * Math.PI)/3, color:colors[Math.floor(Math.random() * colors.length)], shouldShake:this.shouldShake});
+			blocks.push(newBlock);
+			this.blocks.push(newBlock);
+
+			newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter * this.speedModifier, angle:angle + 2 * ((2 * Math.PI)/3), color:colors[Math.floor(Math.random() * colors.length)], shouldShake:this.shouldShake});
+			blocks.push(newBlock);
+			this.blocks.push(newBlock);
+		}
+	};
+}
+
 function SpiralGeneration(opts) {
 	this.blocks = [];
 	this.speedModifier = 1;
@@ -37,7 +114,7 @@ function SpiralGeneration(opts) {
 	var num = Math.floor(Math.random() * 5 + 2);
 	var angleMeasure = Math.random() * (1/10) * Math.PI * 2 + (1/20) * Math.PI * 2;
 	angle -= angleMeasure;
-	this.speedModifier = .875545;
+	this.speedModifier = .80;
 	this.update = function(dt) {
 		if (this.blocks.length == 0 || (settings.baseDistFromCenter - Block.prototype.blockHeight)/(settings.baseIter * this.speedModifier) + settings.initTime + .5 >= (this.blocks[this.blocks.length - 1].distFromCenter)/(settings.baseIter * this.speedModifier) + (settings.initTime - this.blocks[this.blocks.length - 1].counter)) {
 			angle += angleMeasure;
@@ -142,7 +219,7 @@ function WaveGen() {
 	this.patternQueue = [];
 	this.speedModifier = 1;
 	this.maxSpeedTime = 200;
-	this.patterns = [SpiralGeneration];
+	this.patterns = [TripleGeneration];
 
 	this.update = function(dt) {
 		this.speedModifier = 1 - (this.counter)/(this.maxSpeedTime * 60) * .5;
