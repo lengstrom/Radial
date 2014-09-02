@@ -26,6 +26,32 @@ function SingleGeneration(opts) {
 	};
 }
 
+function SpiralGeneration(opts) {
+	this.blocks = [];
+	this.speedModifier = 1;
+	var angle = Math.random() * Math.PI * 2;
+	for (var i in opts) {
+		this[i] = opts[i];
+	}
+
+	var num = Math.floor(Math.random() * 5 + 2);
+	var angleMeasure = Math.random() * (1/10) * Math.PI * 2 + (1/20) * Math.PI * 2;
+	angle -= angleMeasure;
+	this.update = function(dt) {
+		if (this.blocks.length == 0 || (settings.baseDistFromCenter - Block.prototype.blockHeight)/(settings.baseIter * this.speedModifier) + settings.initTime + .5 >= (this.blocks[this.blocks.length - 1].distFromCenter)/(settings.baseIter * this.speedModifier) + (settings.initTime - this.blocks[this.blocks.length - 1].counter)) {
+			angle += angleMeasure;
+			newDist = settings.baseDistFromCenter;
+			if (this.blocks.length > 0) {
+				newDist = this.blocks[this.blocks.length - 1].distFromCenter + Block.prototype.blockHeight;
+			}
+
+			var newBlock = new Block({distFromBlock:newDist, parent:this, angularWidth:angleMeasure, iter:settings.baseIter * this.speedModifier, angle:angle, color:colors[Math.floor(Math.random() * colors.length)]});
+			blocks.push(newBlock);
+			this.blocks.push(newBlock);
+		}
+	};
+}
+
 function AlternateGeneration(opts) {
 	this.counter = 0;
 	this.blocks = [];
@@ -38,6 +64,7 @@ function AlternateGeneration(opts) {
 
 	var num = Math.floor(Math.random() * 3 + 3) * 2;
 	var angleMeasure = (Math.PI * 2)/num;
+
 	this.update = function(dt) {
 		this.counter += dt;
 		if (this.counter > 60 * this.speedModifier) {
@@ -114,7 +141,7 @@ function WaveGen() {
 	this.patternQueue = [];
 	this.speedModifier = 1;
 	this.maxSpeedTime = 200;
-	this.patterns = [AlternateGeneration];
+	this.patterns = [SpiralGeneration];
 
 	this.update = function(dt) {
 		this.speedModifier = 1 - (this.counter)/(this.maxSpeedTime * 60) * .5;

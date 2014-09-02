@@ -1,8 +1,4 @@
 function Player(opts) {
-	// options:
-		// angle
-		// baseRadius
-		// keyBindings
 	this.renderColor = "#232323";
 	this.sideLength = 22;
 	this.keyBindings = [37, 39, 38]; //left / right arrow keys

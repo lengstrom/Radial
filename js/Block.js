@@ -1,16 +1,15 @@
 function Block(opts) {
 	this.state = 0;
 	this.angle = 0;
-	this.initTime = 25;
+	this.initTime = settings.initTime;
 	this.counter = 0;
 	this.parent = false;
-	this.blockHeight = 25;
 	this.endTime = 10;
 	this.iter = 5;
 	this.shouldShake = 1;
 	this.color = '#f1c40f';
 	this.angularWidth = Math.PI/5;
-	this.distFromCenter = 400;
+	this.distFromCenter = settings.baseDistFromCenter;
 	for (var i in opts) {
 		this[i] = opts[i];
 	}
@@ -64,3 +63,5 @@ function Block(opts) {
 		}
 	};
 }
+
+Block.prototype.blockHeight = 25;
