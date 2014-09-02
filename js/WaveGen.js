@@ -66,10 +66,10 @@ function TripleGeneration(opts) {
 	this.speedModifier = 1;
 	this.shouldShake = 0;
 	var angle = Math.random() * Math.PI * 2;
-
 	for (var i in opts) {
 		this[i] = opts[i];
 	}
+
 	var num = Math.floor(Math.random() * 4 + 2) * 3;
 	var angleMeasure = (Math.PI * 2)/num;
 	this.update = function(dt) {
@@ -109,10 +109,10 @@ function SpiralGeneration(opts) {
 		this[i] = opts[i];
 	}
 
-	var num = Math.floor(Math.random() * 5 + 2);
 	var angleMeasure = Math.random() * (1/10) * Math.PI * 2 + (1/20) * Math.PI * 2;
 	angle -= angleMeasure;
-	this.speedModifier = .80;
+	this.speedModifier = .445;
+	this.speedModifier *= ((1/10) * Math.PI * 2 + (1/20) * Math.PI * 2)/angleMeasure;
 	this.update = function(dt) {
 		if (this.blocks.length == 0 || (settings.baseDistFromCenter - Block.prototype.blockHeight)/(settings.baseIter * this.speedModifier) + settings.initTime + .5 >= (this.blocks[this.blocks.length - 1].distFromCenter)/(settings.baseIter * this.speedModifier) + (settings.initTime - this.blocks[this.blocks.length - 1].counter)) {
 			angle += angleMeasure;
@@ -212,13 +212,25 @@ function RandomMultipleGeneration(opts) {
 	};
 }
 
+function waveAugmentation(wave) {
+	this.wave = wave;
+	this.update = function(dt) {
+		for (var i = 0; i < wave.blocks.length; i++) {
+			if (blocks[i]) {
+				blocks[i].angle += 2 * (Math.PI / 1111) * dt;
+			}
+		}
+	};
+}
+
 function WaveGen() {
 	this.counter = 0;
 	this.patternQueue = [];
 	this.speedModifier = 1;
 	this.maxSpeedTime = 200;
-	this.patterns = [TripleGeneration];
-
+	this.patterns = [SpiralGeneration];
+	this.augments = [waveAugmentation];
+	this.augmentationQueue = [];
 	this.update = function(dt) {
 		this.speedModifier = 1 - (this.counter)/(this.maxSpeedTime * 60) * .5;
 		this.counter += dt;
@@ -226,8 +238,13 @@ function WaveGen() {
 			this.patternQueue[i].update(dt);
 		}
 
+		for (var i = 0; i < this.augmentationQueue.length; i++) {
+			this.augmentationQueue[i].update(dt);
+		}
+
 		if (Math.round(this.counter) > 0) {
 			this.patternQueue.push(this.findPattern());
+			this.augmentationQueue.push(new (this.augments[0])(this.patternQueue[0]));
 			this.counter = -1111111111111;
 		}
 	};
