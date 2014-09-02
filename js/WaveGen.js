@@ -73,7 +73,6 @@ function TripleGeneration(opts) {
 	var num = Math.floor(Math.random() * 4 + 2) * 3;
 	var angleMeasure = (Math.PI * 2)/num;
 	this.update = function(dt) {
-		debugger;
 		this.counter += dt;
 		if (this.counter > 30 * this.speedModifier - (1 - 1 * (num + 6)/12) * 70) {
 			this.shouldShake = 0;
@@ -83,7 +82,6 @@ function TripleGeneration(opts) {
 			while (Math.abs(tempAngle - angle) < angleMeasure * (3/4)) {
 				ct++;
 				tempAngle = Math.random() * Math.PI * 2;
-				if (ct > 100) debugger;
 			}
 
 			angle = tempAngle;
