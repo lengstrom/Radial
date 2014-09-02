@@ -1,5 +1,5 @@
 function Player(opts) {
-	this.renderColor = "#232323";
+	this.color = "#232323";
 	this.sideLength = 22;
 	this.keyBindings = [37, 39, 38]; //left / right arrow keys
 	this.jumps = 0;
@@ -76,7 +76,12 @@ function Player(opts) {
 		}
 		
 		this.angle += this.angularVelocity * dt;
-		this.radius = settings.baseRadius + this.yOffset;
+		if (this.yOffset != 0) {
+			debugger;
+			this.radius = settings.startRadius + this.yOffset;
+		} else {
+			this.radius = settings.baseRadius;
+		}
 	};
 
 	this.draw = function() {
