@@ -219,18 +219,18 @@ function RandomMultipleGeneration(opts) {
 	};
 }
 
-function waveAugmentation(wave) {
+function WaveAugmentation(wave) {
 	this.wave = wave;
 	this.update = function(dt) {
 		for (var i = 0; i < wave.blocks.length; i++) {
 			if (wave.blocks[i]) {
-				wave.blocks[i].angle += 2 * (Math.PI / 1111) * dt;
-			} else {
-				debugger;
+				wave.blocks[i].angle += (this.anglePerSec/60) * (Math.PI/180) * dt;
 			}
 		}
 	};
 }
+
+WaveAugmentation.prototype.anglePerSec = 10;
 
 function WaveGen() {
 	this.counter = 0;
@@ -238,7 +238,7 @@ function WaveGen() {
 	this.speedModifier = 1;
 	this.maxSpeedTime = 200;
 	this.patterns = [SpiralGeneration];
-	this.augments = [waveAugmentation];
+	this.augments = [WaveAugmentation];
 	this.augmentationQueue = [];
 	this.update = function(dt) {
 		this.speedModifier = 1 - (this.counter)/(this.maxSpeedTime * 60) * .5;
