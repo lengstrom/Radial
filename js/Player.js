@@ -24,6 +24,20 @@ function Player(opts) {
 
 	this.update = function(dt) {
 		var normalizedAcceleration = dt * this.acceleration;
+
+		for (var x = 0; x < blocks.length; x++ ){
+			console.log(blocks[x].distFromCenter)
+			if (isPlayerTouchingBlock(this, blocks[x])){
+				//console.log("touch!");
+			}			
+			else {
+				//console.log("no touch!");
+			}
+
+			
+			debugger;
+		}
+
 		if (keys[this.keyBindings[2]]) {
 			if (this.jumps < this.maxJumps) {
 				this.jumps += 1;
