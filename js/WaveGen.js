@@ -256,12 +256,12 @@ function RotationAugmentation(wave) {
 			if (wave.blocks[i]) {
 				if (wave.blocks[i].identity !== undefined) {
 					if (wave.blocks[i].identity % 2 == 0) {
-						wave.blocks[i].angle += 10 * (this.anglePerSec/60) * (Math.PI/180) * dt;
+						wave.blocks[i].angle += 10 * (this.anglePerSec/60) * (Math.PI/180) * dt * settings.scale;
 					} else {
-						wave.blocks[i].angle -= 10 * (this.anglePerSec/60) * (Math.PI/180) * dt;
+						wave.blocks[i].angle -= 10 * (this.anglePerSec/60) * (Math.PI/180) * dt * settings.scale;
 					}
 				} else {
-					wave.blocks[i].angle += Math.sin(this.cumulativeSum/20) * 20 * (this.anglePerSec/60) * (Math.PI/180) * dt;
+					wave.blocks[i].angle += Math.sin(this.cumulativeSum/20) * 20 * (this.anglePerSec/60) * (Math.PI/180) * dt * settings.scale;
 				}
 			}
 		}
@@ -278,9 +278,9 @@ function YAxisAugmentation(wave) {
 		for (var i = 0; i < wave.blocks.length; i++) {
 			if (wave.blocks[i]) {
 				if (wave.blocks[0].identity !== undefined) {
-					wave.blocks[i].distFromCenter += Math.sin(this.cumulativeSum/10) * (100/60) * dt;
+					wave.blocks[i].distFromCenter += Math.sin(this.cumulativeSum/10) * (100/60) * dt * settings.scale;
 				} else {
-					wave.blocks[i].distFromCenter += Math.sin(this.cumulativeSum/this.heartBeatSpeedDivisor) * (this.heartBeatMagnitude/60) * dt;
+					wave.blocks[i].distFromCenter += Math.sin(this.cumulativeSum/this.heartBeatSpeedDivisor) * (this.heartBeatMagnitude/60) * dt * settings.scale;
 				}
 			}
 		}
