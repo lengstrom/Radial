@@ -247,8 +247,8 @@ function YAxisAugmentation(wave) {
 	};
 }
 
-YAxisAugmentation.prototype.heartBeatMagnitude = 100;
-YAxisAugmentation.prototype.heartBeatSpeedDivisor = 20;
+YAxisAugmentation.prototype.heartBeatMagnitude = 400;
+YAxisAugmentation.prototype.heartBeatSpeedDivisor = 17;
 
 function WaveGen() {
 	this.counter = 0;
