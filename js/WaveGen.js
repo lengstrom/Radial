@@ -241,13 +241,14 @@ function YAxisAugmentation(wave) {
 		this.cumulativeSum += dt;
 		for (var i = 0; i < wave.blocks.length; i++) {
 			if (wave.blocks[i]) {
-				wave.blocks[i].distFromCenter += Math.sin(this.cumulativeSum/20) * 50 * (this.YPerSec/60) * dt;
+				wave.blocks[i].distFromCenter += Math.sin(this.cumulativeSum/this.heartBeatSpeedDivisor) * (this.heartBeatMagnitude/60) * dt;
 			}
 		}
 	};
 }
 
-YAxisAugmentation.prototype.YPerSec = 10;
+YAxisAugmentation.prototype.heartBeatMagnitude = 100;
+YAxisAugmentation.prototype.heartBeatSpeedDivisor = 20;
 
 function WaveGen() {
 	this.counter = 0;
