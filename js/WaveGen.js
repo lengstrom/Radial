@@ -26,6 +26,35 @@ function SingleGeneration(opts) {
 	};
 }
 
+function StartScreen(opts) {
+	this.counter = 0;
+	this.blocks = [];
+	this.speedModifier = 1;
+	var num = 10;
+	var angleMeasure = (Math.PI * 2)/num;
+
+	for (var i in opts) {
+		this[i] = opts[i];
+	}
+
+	this.update = function(dt) {
+		if (this.counter == 0) {
+			for (var j = .33; j < 3; j++) {
+				var distFromCenter = settings.baseRadius + ((settings.baseDistFromCenter - settings.baseRadius)/3) * j
+				var angle = 0;
+				for (var i = 0; i < num; i++) {
+					var newBlock = new Block({identity:Math.floor(j), distFromCenter:distFromCenter, angularWidth:angleMeasure, iter:0, angle:angle, color:colors[Math.floor(Math.random() * colors.length)]});
+					angle += angleMeasure;
+					blocks.push(newBlock);
+					this.blocks.push(newBlock);
+				}
+			}
+
+			this.counter = 1;
+		}
+	};
+}
+
 function DoubleGeneration(opts) {
 	this.counter = 0;
 	this.blocks = [];
@@ -172,7 +201,6 @@ function AlternateGeneration(opts) {
 	};
 }
 
-
 function RandomMultipleGeneration(opts) {
 	this.counter = 0;
 	this.blocks = [];
@@ -226,7 +254,15 @@ function RotationAugmentation(wave) {
 		this.cumulativeSum += dt;
 		for (var i = 0; i < wave.blocks.length; i++) {
 			if (wave.blocks[i]) {
-				wave.blocks[i].angle += Math.sin(this.cumulativeSum/20) * 20 * (this.anglePerSec/60) * (Math.PI/180) * dt;
+				if (wave.blocks[i].identity !== undefined) {
+					if (wave.blocks[i].identity % 2 == 0) {
+						wave.blocks[i].angle += 10 * (this.anglePerSec/60) * (Math.PI/180) * dt;
+					} else {
+						wave.blocks[i].angle -= 10 * (this.anglePerSec/60) * (Math.PI/180) * dt;
+					}
+				} else {
+					wave.blocks[i].angle += Math.sin(this.cumulativeSum/20) * 20 * (this.anglePerSec/60) * (Math.PI/180) * dt;
+				}
 			}
 		}
 	};
@@ -241,7 +277,11 @@ function YAxisAugmentation(wave) {
 		this.cumulativeSum += dt;
 		for (var i = 0; i < wave.blocks.length; i++) {
 			if (wave.blocks[i]) {
-				wave.blocks[i].distFromCenter += Math.sin(this.cumulativeSum/this.heartBeatSpeedDivisor) * (this.heartBeatMagnitude/60) * dt;
+				if (wave.blocks[0].identity !== undefined) {
+					wave.blocks[i].distFromCenter += Math.sin(this.cumulativeSum/10) * (100/60) * dt;
+				} else {
+					wave.blocks[i].distFromCenter += Math.sin(this.cumulativeSum/this.heartBeatSpeedDivisor) * (this.heartBeatMagnitude/60) * dt;
+				}
 			}
 		}
 	};
@@ -255,9 +295,9 @@ function WaveGen() {
 	this.patternQueue = [];
 	this.speedModifier = 1;
 	this.maxSpeedTime = 200;
-	this.patterns = [SpiralGeneration];
-	this.augments = [YAxisAugmentation];
+	this.patterns = [StartScreen];
 	this.augmentationQueue = [];
+	this.augments = [];
 	this.update = function(dt) {
 		this.speedModifier = 1 - (this.counter)/(this.maxSpeedTime * 60) * .5;
 		this.counter += dt;
@@ -271,7 +311,8 @@ function WaveGen() {
 
 		if (Math.round(this.counter) > 0) {
 			this.patternQueue.push(this.findPattern());
-			this.augmentationQueue.push(new (this.augments[0])(this.patternQueue[0]));
+			debugger;
+			this.augmentationQueue = [new YAxisAugmentation(this.patternQueue[0]), new RotationAugmentation(this.patternQueue[0])];
 			this.counter = -1111111111111;
 		}
 	};
