@@ -7,7 +7,7 @@ function init(a) {
 		startRadius:110,
 		baseRadius:110,
 		scale:1,
-		initTime:25,
+		initTime:20,
 		baseDistFromCenter:400,
 		shakeMagnitude:20 * (window.devicePixelRatio ? window.devicePixelRatio : 1),
 		baseIter:5

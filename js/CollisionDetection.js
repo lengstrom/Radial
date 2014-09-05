@@ -13,17 +13,17 @@ function isPlayerTouchingBlock(player, block){
 	var blockTop = block.angle + block.angularWidth/2;
 	var blockBottom = block.angle - block.angularWidth/2; 
 
-	console.log("playerHeightBottom:" + playerHeightBottom);
-	console.log("playerHeightTop:" + playerHeightTop);
-	console.log("block.distFromCenter:" + block.distFromCenter);
+	// console.log("playerHeightBottom:" + playerHeightBottom);
+	// console.log("playerHeightTop:" + playerHeightTop);
+	// console.log("block.distFromCenter:" + block.distFromCenter);
 
-	console.log("blockTopAngle: " + blockTop);
-	console.log("blockBottomAngle: " + blockBottom);
-	console.log("player.angle: " + player.angle%6.28); 
+	// console.log("blockTopAngle: " + blockTop);
+	// console.log("blockBottomAngle: " + blockBottom);
+	// console.log("player.angle: " + player.angle%6.28); 
 	if (block.distFromCenter >= playerHeightBottom && block.distFromCenter <= playerHeightTop
 		&& player.angle%6.28 < blockTop && player.angle%6.28 > blockBottom){
 		(player.color == "#FFFFFF") ? player.color = "#000000" : player.color = "#FFFFFF";
-		console.log("HIT!");
+		// console.log("HIT!");
 		return true;
 	}
 	return false;

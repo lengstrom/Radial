@@ -1,4 +1,5 @@
 function update(dt, now) {
+	dt = 1;
 	cumulativeTime += dt/4;
 	gdx = 0; // reset global shifts
 	gdy = 0;

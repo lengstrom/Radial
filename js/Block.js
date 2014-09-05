@@ -5,6 +5,7 @@ function Block(opts) {
 	this.counter = 0;
 	this.parent = false;
 	this.endTime = 10;
+	this.peer = false;
 	this.iter = 5;
 	this.shouldShake = 1;
 	this.color = '#f1c40f';
@@ -41,6 +42,10 @@ function Block(opts) {
 				if (this.counter >= this.initTime) {
 					this.state = 1;
 					this.counter = 0;
+					if (this.peer) {
+						this.distFromCenter = this.peer.distFromCenter + this.blockHeight;
+						this.peer = false;
+					}
 				}
 				break;
 
