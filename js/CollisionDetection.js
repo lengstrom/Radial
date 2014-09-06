@@ -12,16 +12,19 @@ function isPlayerTouchingBlock(player, block){
 
 	var blockTop = block.angle + block.angularWidth/2;
 	var blockBottom = block.angle - block.angularWidth/2; 
+	/*
+	console.log("playerHeightBottom:" + playerHeightBottom);
+	console.log("playerHeightTop:" + playerHeightTop);
+	console.log("block.distFromCenter:" + block.distFromCenter);
+	*/
 
-	// console.log("playerHeightBottom:" + playerHeightBottom);
-	// console.log("playerHeightTop:" + playerHeightTop);
-	// console.log("block.distFromCenter:" + block.distFromCenter);
-
-	// console.log("blockTopAngle: " + blockTop);
-	// console.log("blockBottomAngle: " + blockBottom);
-	// console.log("player.angle: " + player.angle%6.28); 
+	/*@Meadow
+	console.log("blockTopAngle: " + blockTop%6.28);
+	console.log("blockBottomAngle: " + blockBottom%6.28);
+	console.log("player.angle: " + player.angle%6.28); 
+	*/
 	if (block.distFromCenter >= playerHeightBottom && block.distFromCenter <= playerHeightTop
-		&& player.angle%6.28 < blockTop && player.angle%6.28 > blockBottom){
+		&& player.angle%6.28 < blockTop%6.28 && player.angle%6.28 > blockBottom%6.28){
 		(player.color == "#FFFFFF") ? player.color = "#000000" : player.color = "#FFFFFF";
 		// console.log("HIT!");
 		return true;
@@ -50,7 +53,7 @@ function isPLayerTouchingPlayer(player1, player2) {
 			||(player2Top >= player1Bottom && player2Top <= player1Top)) //Angles overlap one way or another
 		{
 			player1.color = "#AFAFAF";
-			player2.color = "#FFAAFF";
+			//player2.color = "#FFAAFF";
 			return true;
 		} 		
 	}
