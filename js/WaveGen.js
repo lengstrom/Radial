@@ -262,7 +262,7 @@ function RandomFastMultipleGeneration(opts) {
 	var angleMeasure = (Math.PI * 2)/num;
 	this.update = function(dt) {
 		this.counter += dt;
-		if (this.counter > 50) {
+		if (this.counter > 55) {
 			this.shouldShake = 0;
 			this.counter = 0;
 			var tempAngle = Math.random() * Math.PI * 2;
