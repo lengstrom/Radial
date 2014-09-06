@@ -201,21 +201,22 @@ function AlternateGeneration(opts) {
 	};
 }
 
-function RandomMultipleGeneration(opts) {
+function RandomSlowMultipleGeneration(opts) {
 	this.counter = 0;
 	this.blocks = [];
 	this.shouldShake = 0;
-	this.speedModifier = 1;
+	this.openings = [0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 3];
 	var angle = Math.random() * Math.PI * 2;
 	for (var i in opts) {
 		this[i] = opts[i];
 	}
 
-	var num = Math.floor(Math.random() * 7 + 3);
+	var num = Math.floor(Math.random() * 8 + 3);
 	var angleMeasure = (Math.PI * 2)/num;
+	this.speedModifier = .8; //(1.5 - (num/10));
 	this.update = function(dt) {
 		this.counter += dt;
-		if (this.counter > 60 * this.speedModifier) {
+		if (this.counter > 100 * this.speedModifier) {
 			this.shouldShake = 0;
 			this.counter = 0;
 			var tempAngle = Math.random() * Math.PI * 2;
@@ -224,7 +225,7 @@ function RandomMultipleGeneration(opts) {
 			}
 
 			angle = tempAngle;
-			var numBlocksOpen = Math.floor(Math.random() * (this.openings[num] + 1) + 1);
+			var numBlocksOpen = Math.floor(Math.random() * (this.openings[num]) + 1);
 			var blocksToLeaveOpen = [];
 			var blocking = 0;
 			while (numBlocksOpen > 0) {
@@ -237,7 +238,7 @@ function RandomMultipleGeneration(opts) {
 			var color = colors[Math.floor(Math.random() * colors.length)];
 			for (var i = 0; i < num; i++) {
 				if (blocksToLeaveOpen.indexOf(i) == -1) {
-					var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter, angle:angle + i * angleMeasure, color:color, shouldShake:this.shouldShake});
+					var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter * (1/6), angle:angle + i * angleMeasure, color:color, shouldShake:this.shouldShake});
 					this.shouldShake = 1;
 					blocks.push(newBlock);
 					this.blocks.push(newBlock);
@@ -256,9 +257,9 @@ function RotationAugmentation(wave) {
 			if (wave.blocks[i]) {
 				if (wave.blocks[i].identity !== undefined) {
 					if (wave.blocks[i].identity % 2 == 0) {
-						wave.blocks[i].angle += 10 * (this.anglePerSec/60) * (Math.PI/180) * dt * settings.scale;
+						wave.blocks[i].angle += 10 * (this.anglePerSec/60) * (Math.PI/180) * dt;
 					} else {
-						wave.blocks[i].angle -= 10 * (this.anglePerSec/60) * (Math.PI/180) * dt * settings.scale;
+						wave.blocks[i].angle -= 10 * (this.anglePerSec/60) * (Math.PI/180) * dt;
 					}
 				} else {
 					wave.blocks[i].angle += Math.sin(this.cumulativeSum/20) * 20 * (this.anglePerSec/60) * (Math.PI/180) * dt * settings.scale;
@@ -295,7 +296,7 @@ function WaveGen() {
 	this.patternQueue = [];
 	this.speedModifier = 1;
 	this.maxSpeedTime = 200;
-	this.patterns = [StartScreen];
+	this.patterns = [RandomSlowMultipleGeneration];
 	this.augmentationQueue = [];
 	this.augments = [];
 	this.update = function(dt) {
@@ -311,8 +312,7 @@ function WaveGen() {
 
 		if (Math.round(this.counter) > 0) {
 			this.patternQueue.push(this.findPattern());
-			debugger;
-			this.augmentationQueue = [new YAxisAugmentation(this.patternQueue[0]), new RotationAugmentation(this.patternQueue[0])];
+			// this.augmentationQueue = [new YAxisAugmentation(this.patternQueue[0])];
 			this.counter = -1111111111111;
 		}
 	};
