@@ -94,6 +94,11 @@ function Player(opts) {
 		for (var i = 0; i < this.bodies.length; i++) {
 			var angle = this.bodies[i] + this.angle;
 			var ss = settings.scale;
+			/*
+			console.log("Begin Draw Cone");
+			drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle + .5), (this.angle - .5), this.sideLength, this.yOffset + gdr, "#FFFFFF");
+			console.log("End Draw Cone");
+			*/
 			drawRect(trueCanvas.width/2 + ss * Math.cos(angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - angle) * ss, trueCanvas.height/2 + Math.sin(angle) * this.radius * ss + (-this.sideLength/2) * Math.cos(2 * Math.PI - angle) * ss, this.sideLength, this.color, angle, (this.yOffset == 0));
 		}
 	};
