@@ -14,7 +14,7 @@ function SingleGeneration(opts) {
 		if (this.counter > 40 * this.speedModifier * (1 - .8 * ((num - 1)/5))) {
 			this.counter = 0;
 			var tempAngle = Math.random() * Math.PI * 2;
-			while (Math.abs(tempAngle - angle) < angleMeasure * (3/4)) {
+			while (Math.abs(tempAngle - angle) < angleMeasure * (5/6)) {
 				tempAngle = Math.random() * Math.PI * 2;
 			}
 
@@ -359,7 +359,7 @@ function WaveGen() {
 
 		if (Math.round(this.counter) > 0) {
 			this.patternQueue.push(this.findPattern());
-			this.augmentationQueue = [new RotationAugmentation(this.patternQueue[0])];
+			// this.augmentationQueue = [new RotationAugmentation(this.patternQueue[0])];
 			this.counter = -1111111111111;
 		}
 	};
