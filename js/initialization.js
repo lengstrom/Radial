@@ -2,7 +2,7 @@ function init(a) {
 	last = Date.now();
 	cumulativeTime = 0;
 
-	window.settings = {
+	settings = {
 		gravity:1,
 		startRadius:110,
 		baseRadius:110,
@@ -58,6 +58,8 @@ function init(a) {
 		document.addEventListener('keyup', function(e) {
 			keys[e.keyCode] = 0;
 		});
+
+		canvas.addEventListener('mousedown tapstart')
 	}
 
 	//rendering
