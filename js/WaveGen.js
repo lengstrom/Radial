@@ -343,7 +343,7 @@ function WaveGen() {
 	this.patternQueue = [];
 	this.speedModifier = 1;
 	this.maxSpeedTime = 200;
-	this.patterns = [AlternateGeneration];
+	this.patterns = [StartScreen];
 	this.augmentationQueue = [];
 	this.augments = [];
 	this.update = function(dt) {
@@ -359,7 +359,7 @@ function WaveGen() {
 
 		if (Math.round(this.counter) > 0) {
 			this.patternQueue.push(this.findPattern());
-			// this.augmentationQueue = [new RotationAugmentation(this.patternQueue[0])];
+			this.augmentationQueue = [new RotationAugmentation(this.patternQueue[0]), new SinusoidalYAxisAugmentation(this.patternQueue[0])];
 			this.counter = -1111111111111;
 		}
 	};

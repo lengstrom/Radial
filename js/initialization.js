@@ -73,7 +73,7 @@ function init(a) {
 	});
 
 	player2 = new Player({
-		angle:Math.PI/2,
+		angle:Math.PI,
 		keyBindings:[65, 68, 87], // a / d
 		color:'#e74c3c',
 		numBodies:1

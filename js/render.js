@@ -85,5 +85,22 @@ function render() {
 	for (var i = 0; i < blocks.length; i++) {
 		blocks[i].draw();
 	}
+
+	switch (gameState) {
+		default:
+			ctx.globalAlpha = .3;
+			ctx.fillStyle = '#ecf0f1';
+			ctx.fillRect(0, 0, c.height, c.width);
+			ctx.globalAlpha = 1;
+			fillText('110px Helvetica', 'Circletris', trueCanvas.width/2, trueCanvas.height/2 - 115 * settings.scale)
+			fillText('40px Helvetica', 'Play!', trueCanvas.width/2, trueCanvas.height/2)
+	}
 	// ctx.fillStyle = '#232323';
+}
+
+function fillText(font, name, x, y, color) {
+	ctx.fillStyle = '#ecf0f1';
+	ctx.textBaseline = 'middle';
+	ctx.font = font;
+	ctx.fillText(name, x - ctx.measureText(name).width/2, y);
 }
