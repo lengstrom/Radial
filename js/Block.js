@@ -4,11 +4,12 @@ function Block(opts) {
 	this.initTime = settings.initTime;
 	this.counter = 0;
 	this.parent = false;
-	this.endTime = 10;
+	this.endTime = 15;
 	this.peer = false;
 	this.iter = 5;
 	this.shouldShake = 1;
 	this.color = '#f1c40f';
+	this.shouldDeleteSelf = false;
 	this.angularWidth = Math.PI/5;
 	this.distFromCenter = settings.baseDistFromCenter;
 	for (var i in opts) {
@@ -16,10 +17,12 @@ function Block(opts) {
 	}
 
 	this.draw = function() {
+		var op;
+		if (this.shouldDeleteSelf) debugger;
 		switch (this.state) {
 			case 0:
 				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle - this.angularWidth/2) + (this.angularWidth) * (this.counter/this.initTime), (this.angle - this.angularWidth/2), this.blockHeight, this.distFromCenter + gdr, this.color);
-				var op = (1 - (this.counter)/this.initTime);
+				op = (1 - (this.counter)/this.initTime);
 				if (op > 0) {
 					drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle - this.angularWidth/2) + (this.angularWidth) * (this.counter/this.initTime), (this.angle - this.angularWidth/2), this.blockHeight, this.distFromCenter + gdr, '#FFFFFF', op);
 				}
@@ -30,12 +33,22 @@ function Block(opts) {
 				break;
 
 			case 2:
-				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, this.angle + this.angularWidth/2, this.angle - this.angularWidth/2, this.blockHeight, this.distFromCenter + gdr, '#FFFFFF', 1 - ((this.counter)/this.endTime));
+			case 4:
+				op = 1 - ((this.counter)/this.endTime);
+				if (op > 0 && op <= 1) {
+					drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, this.angle + this.angularWidth/2, this.angle - this.angularWidth/2, this.blockHeight, this.distFromCenter + gdr, '#FFFFFF', op);
+				}
 				break;
 		}
 	};
 
 	this.update = function(dt) {
+		if (this.shouldDeleteSelf !== false) {
+			if (this.distFromCenter <= this.shouldDeleteSelf) {
+				this.state = 4;
+			}
+		}
+
 		switch (this.state) {
 			case 0:
 				this.counter += dt;
@@ -62,6 +75,18 @@ function Block(opts) {
 				this.distFromCenter = settings.baseRadius;
 				this.counter += dt;
 				if (this.counter > this.endTime) {
+					this.state = 3;
+				}
+				break;
+
+			case 4:
+				this.distFromCenter -= this.iter * dt;
+				this.counter += dt;
+				if (this.counter > this.endTime) {
+					this.state = 3;
+				}
+
+				if (this.distFromCenter <= settings.startRadius) {
 					this.state = 3;
 				}
 				break;
