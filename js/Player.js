@@ -35,6 +35,17 @@ function Player(opts) {
 			}
 		}
 
+		var players = [player1];
+			if ('player2' in window) {
+				players.push(player2);
+			}
+
+		if(players.count == 2){
+			if(isPLayerTouchingPlayer(players[0], players[1])){
+				console.log("P1/P2 Touching");
+			}
+		}
+
 		if (keys[this.keyBindings[2]]) {
 			if (this.jumps < this.maxJumps) {
 				this.jumps += 1;
@@ -94,12 +105,13 @@ function Player(opts) {
 		for (var i = 0; i < this.bodies.length; i++) {
 			var angle = this.bodies[i] + this.angle;
 			var ss = settings.scale;
-			/*
-			console.log("Begin Draw Cone");
-			drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle + .5), (this.angle - .5), this.sideLength, this.yOffset + gdr, "#FFFFFF");
-			console.log("End Draw Cone");
-			*/
-			drawRect(trueCanvas.width/2 + ss * Math.cos(angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - angle) * ss, trueCanvas.height/2 + Math.sin(angle) * this.radius * ss + (-this.sideLength/2) * Math.cos(2 * Math.PI - angle) * ss, this.sideLength, this.color, angle, (this.yOffset == 0));
+			
+			//console.log("Begin Draw Cone");
+			//console.log("gdr: " +  gdr);
+			drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle + .5), (this.angle - .5), this.sideLength, this.radius + gdr, "#FFFFFF");
+			//console.log("End Draw Cone");
+			
+			//drawRect(trueCanvas.width/2 + ss * Math.cos(angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - angle) * ss, trueCanvas.height/2 + Math.sin(angle) * this.radius * ss + (-this.sideLength/2) * Math.cos(2 * Math.PI - angle) * ss, this.sideLength, this.color, angle, (this.yOffset == 0));
 		}
 	};
 

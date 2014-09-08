@@ -18,15 +18,15 @@ function isPlayerTouchingBlock(player, block){
 	console.log("block.distFromCenter:" + block.distFromCenter);
 	*/
 
-	/*@Meadow
-	console.log("blockTopAngle: " + blockTop%6.28);
-	console.log("blockBottomAngle: " + blockBottom%6.28);
-	console.log("player.angle: " + player.angle%6.28); 
-	*/
+	//*@Meadow
+	//console.log("blockTopAngle: " + blockTop%6.28);
+	//console.log("blockBottomAngle: " + blockBottom%6.28);
+	//console.log("player.angle: " + player.angle%6.28); 
+	//*/
 	if (block.distFromCenter >= playerHeightBottom && block.distFromCenter <= playerHeightTop
 		&& player.angle%6.28 < blockTop%6.28 && player.angle%6.28 > blockBottom%6.28){
 		(player.color == "#FFFFFF") ? player.color = "#000000" : player.color = "#FFFFFF";
-		// console.log("HIT!");
+		 console.log("HIT!");
 		return true;
 	}
 	return false;

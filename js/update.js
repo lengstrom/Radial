@@ -24,6 +24,7 @@ function update(dt, now) {
 	// gdr = Math.sin(cumulativeTime) * 10;
 	settings.baseRadius = settings.startRadius + gdr;
 
+
 	var players = [player1];
 	if ('player2' in window) {
 		players.push(player2);
