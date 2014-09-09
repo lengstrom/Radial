@@ -47,6 +47,12 @@ function isPLayerTouchingPlayer(player1, player2) {
 	var player2Top = player2.angle + .5;
 	var player2Bottom = player2.angle - .5;
 
+	console.log("player1Top: " + player1Top);
+	console.log("player1Bottom: " + player1Bottom);
+
+	console.log("player2Top: " + player2Top);
+	console.log("player2Bottom: " + player2Bottom);
+
 	if ((player1HeightBottom >= player2HeightBottom && player1HeightBottom <= player2HeightTop)
 		|| (player2HeightBottom >= player1HeightBottom && player2HeightBottom <= player1HeightTop)){//Heights overlap one way or another
 		if((player1Top >= player2Bottom && player1Top <= player2Top) 

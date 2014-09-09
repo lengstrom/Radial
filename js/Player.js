@@ -35,16 +35,7 @@ function Player(opts) {
 			}
 		}
 
-		var players = [player1];
-			if ('player2' in window) {
-				players.push(player2);
-			}
 
-		if(players.count == 2){
-			if(isPLayerTouchingPlayer(players[0], players[1])){
-				console.log("P1/P2 Touching");
-			}
-		}
 
 		if (keys[this.keyBindings[2]]) {
 			if (this.jumps < this.maxJumps) {
@@ -96,8 +87,31 @@ function Player(opts) {
 			this.jumps = 0;
 			this.yVelocity = 0;
 		}
+
+		var players = [player1];
+			if ('player2' in window) {
+				players.push(player2);
+			}
+
+		for(var x = 0; x < players.length; x++ ){
+			if(isPLayerTouchingPlayer(this, players[x]) && this !== players[x]){
+				console.log("P1/P2 Touching");
+				this.angularVelocity = 0;
+			}
+		}
 		
 		this.angle += this.angularVelocity * dt;
+		
+		for(var x = 0; x < players.length; x++ ){
+			if(isPLayerTouchingPlayer(this, players[x]) && this !== players[x]){
+				console.log("P1/P2 Touching");
+				this.angle -= this.angularVelocity * dt;
+				this.angularVelocity = 0;
+			}
+		}
+
+		if (this.angle < 0) this.angle += 6.28;
+		if (this.angle > 6.28) this.angle -=6.28;
 		this.radius = settings.baseRadius + this.yOffset;
 	};
 
