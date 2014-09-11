@@ -4,6 +4,7 @@ function Player(opts) {
 	this.keyBindings = [37, 39, 38]; //left / right arrow keys
 	this.jumps = 0;
 	this.angle = 0;
+	this.angularWidth = .2;
 	this.angularVelocity = 0;
 	this.yOffset = 0;
 	this.yVelocity = 0;
@@ -122,7 +123,39 @@ function Player(opts) {
 			
 			//console.log("Begin Draw Cone");
 			//console.log("gdr: " +  gdr);
-			drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle + .5), (this.angle - .5), this.sideLength, this.radius + gdr, "#FFFFFF");
+
+			//Figure out proper angle for height.
+			/*
+			var trueWidth = 1; //how many radians wide it is at baseradius
+			var floorRadius = (settings.baseRadius + gdr);
+			var floorCircumference = (floorRadius)*6.28;
+			console.log("floorCircumference " + isNaN(floorCircumference));
+			var percentageOfCircle = trueWidth/floorCircumference;
+
+			//converttowidth
+			var bottomX = floorRadius * Math.cos(angle+1/2); 
+			var bottomY = floorRadius * Math.sin(angle+1/2);
+			
+			var topX = floorRadius * Math.cos(angle-1/2);
+			var topY = floorRadius * Math.sin(angle-1/2);
+
+			distBetweenPoints = Math.sqrt((topY-bottomY)*(topY-bottomY) + (topX-bottomX)*(topX-bottomX));
+			console.log("TrueWidth" + distBetweenPoints);
+
+			var bottomDistanceMax = Math.sqrt(bottomX^2 + bottomY^2);
+			var DistanceMax = Math.sqrt(topX^2 + topY^2);
+
+			console.log("bottom: (" + bottomX + " " + bottomY + "), top : (" + topX + " " + topY + ")");
+			console.log("percentageOfCircle " + isNaN(percentageOfCircle));
+			var currentCircumference = this.radius*6.28;
+			console.log("currentCircumference " + currentCircumference);
+			var finalWidth = currentCircumference*percentageOfCircle;
+			console.log("finalWidth: " + finalWidth);
+			finalWidth = finalWidth/2;
+			if(this.radius > 140) debugger;
+			*/
+
+			drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle + this.angularWidth/2), (this.angle - this.angularWidth/2), this.sideLength, this.radius + gdr, "#FFFFFF");
 			//console.log("End Draw Cone");
 			
 			//drawRect(trueCanvas.width/2 + ss * Math.cos(angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - angle) * ss, trueCanvas.height/2 + Math.sin(angle) * this.radius * ss + (-this.sideLength/2) * Math.cos(2 * Math.PI - angle) * ss, this.sideLength, this.color, angle, (this.yOffset == 0));

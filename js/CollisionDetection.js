@@ -38,14 +38,14 @@ function isPLayerTouchingPlayer(player1, player2) {
 	var player1HeightBottom = player1.yOffset + window.settings.baseRadius;
 	var player1HeightTop = player1HeightBottom + player1.sideLength;
 
-	var player1Top = player1.angle + .5;
-	var player1Bottom = player1.angle - .5;
+	var player1Top = player1.angle + player1.angularWidth/2;
+	var player1Bottom = player1.angle - player1.angularWidth/2;
 
 	var player2HeightBottom = player2.yOffset + window.settings.baseRadius;
 	var player2HeightTop = player2HeightBottom + player2.sideLength;
 
-	var player2Top = player2.angle + .5;
-	var player2Bottom = player2.angle - .5;
+	var player2Top = player2.angle + player2.angularWidth/2;
+	var player2Bottom = player2.angle - player2.angularWidth/2;
 
 	console.log("player1Top: " + player1Top);
 	console.log("player1Bottom: " + player1Bottom);
@@ -64,6 +64,8 @@ function isPLayerTouchingPlayer(player1, player2) {
 		} 		
 	}
 }
+
+
 
 function currentlyTouching() {
 	this.TouchingOtherPlayer = false;
