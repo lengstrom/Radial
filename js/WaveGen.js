@@ -7,11 +7,21 @@ function SingleGeneration(opts) {
 	for (var i in opts) {
 		this[i] = opts[i];
 	}
-	var num = Math.floor(Math.random() * 5 + 2);
-	var angleMeasure = (Math.PI)/Math.floor(Math.random() * 4 + 1);
+
+	var num = Math.floor(Math.random() * 5 + 3);
+	this.numToDelay = {
+		3:21,
+		4:18,
+		5:15,
+		6:12,
+		7:9
+	};
+	
+	var angleMeasure = (Math.PI * 2)/num;
 	this.update = function(dt) {
 		this.counter += dt;
-		if (!this.stopped && this.counter > 40 * this.speedModifier * (1 - .8 * ((num - 1)/5))) {
+		if (!this.stopped && this.counter > this.numToDelay[num]) {
+			console.log(num, 60 * this.speedModifier);
 			this.counter = 0;
 			var tempAngle = Math.random() * Math.PI * 2;
 			while (Math.abs(tempAngle - angle) < angleMeasure * (5/6)) {
@@ -19,7 +29,7 @@ function SingleGeneration(opts) {
 			}
 
 			angle = tempAngle;
-			var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter * this.speedModifier, angle:angle, color:colors[Math.floor(Math.random() * colors.length)]});
+			var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter * 1.33, angle:angle, color:colors[Math.floor(Math.random() * colors.length)]});
 			blocks.push(newBlock);
 			this.blocks.push(newBlock);
 		}
@@ -62,14 +72,24 @@ function DoubleGeneration(opts) {
 	this.shouldShake = 0;
 	var angle = Math.random() * Math.PI * 2;
 
+
 	for (var i in opts) {
 		this[i] = opts[i];
 	}
+
 	var num = Math.floor(Math.random() * 5 + 3);
+	this.numToDelay = {
+		3:29.5750,
+		4:25.3499,
+		5:21.1250,
+		6:16.9000,
+		7:12.6749
+	};
+
 	var angleMeasure = (Math.PI * 2)/num;
 	this.update = function(dt) {
 		this.counter += dt;
-		if (!this.stopped && this.counter > 30 * this.speedModifier * (num)/7) {
+		if (!this.stopped && this.counter > this.numToDelay[num]) {
 			this.shouldShake = 0;
 			this.counter = 0;
 			var tempAngle = Math.random() * Math.PI * 2;
@@ -100,10 +120,17 @@ function TripleGeneration(opts) {
 	}
 
 	var num = Math.floor(Math.random() * 4 + 2) * 3;
+	this.numToDelay = {
+		6:22,
+		9:19,
+		12:16,
+		15:13
+	};
+
 	var angleMeasure = (Math.PI * 2)/num;
 	this.update = function(dt) {
 		this.counter += dt;
-		if (!this.stopped && this.counter > 30 * this.speedModifier - (1 - 1 * (num + 6)/12) * 70) {
+		if (!this.stopped && this.counter > this.numToDelay[num]) {
 			this.shouldShake = 0;
 			this.counter = 0;
 			var tempAngle = Math.random() * Math.PI * 2;
@@ -369,10 +396,10 @@ SinusoidalYAxisAugmentation.prototype.heartBeatSpeedDivisor = 17;
 function WaveGen() {
 	this.update = function(dt) {
 		if (this.shouldSwitch == -999999) {
-			this.loadConfig(this.configs[3]);
+			this.loadConfig(this.configs[5]);
 		} else if (this.shouldSwitch < 0) {
 			if (this.continueRemovingBlocks()) {
-				this.loadConfig(this.configs[Math.floor(this.configs.length * Math.random())]);
+				this.loadConfig(this.configs[5]); //Math.floor(this.configs.length * Math.random())
 			}
 		}
 
@@ -479,15 +506,15 @@ function WaveGen() {
 		this.augmentationQueue = [];
 		this.maxSpeedTime = 200;
 		this.configs = [
-			[SpiralGeneration,RotationAugmentation], 
-			[SpiralGeneration,SinusoidalYAxisAugmentation],
-			[SpiralGeneration,0],
-			[SingleGeneration,0],
-			[DoubleGeneration,0],
-			[TripleGeneration,0],
+			[SpiralGeneration,RotationAugmentation],  // good
+			[SpiralGeneration,SinusoidalYAxisAugmentation], //good
+			[SpiralGeneration,0], // too slow
+			[SingleGeneration,0], // good
+			[DoubleGeneration,0], // good
+			[TripleGeneration,0], // good
 			[AlternateGeneration,0],
 			[AlternateGeneration,0,{shouldDeleteBlocks:1}],
-			[RandomSlowMultipleGeneration,0],
+			[RandomSlowMultipleGeneration,0], //good
 			[RandomFastMultipleGeneration,0]
 		];
 	}

@@ -77,7 +77,7 @@ function Player(opts) {
 			}
 		}
 
-		console.log(this.angularVelocity);
+		// console.log(this.angularVelocity);
 		if (Math.abs(this.angularVelocity) > this.maxAngularVelocity) {
 			this.angularVelocity = this.maxAngularVelocity * (this.angularVelocity < 0 ? -1 : 1);
 		}
@@ -99,7 +99,7 @@ function Player(opts) {
 
 		for(var x = 0; x < players.length; x++ ){
 			if(isPLayerTouchingPlayer(this, players[x]) && this !== players[x]){
-				console.log("P1/P2 Touching");
+				// console.log("P1/P2 Touching");
 				this.angularVelocity = 0;
 			}
 		}
@@ -108,7 +108,7 @@ function Player(opts) {
 		
 		for(var x = 0; x < players.length; x++ ){
 			if(isPLayerTouchingPlayer(this, players[x]) && this !== players[x]){
-				console.log("P1/P2 Touching");
+				// console.log("P1/P2 Touching");
 				this.angle -= this.angularVelocity * dt;
 				this.angularVelocity = 0;
 			}

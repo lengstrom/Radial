@@ -1,6 +1,4 @@
 function update(dt, now) {
-	dt = 1;
-	cumulativeTime += dt/4;
 	gdx = 0; // reset global shifts
 	gdy = 0;
 	gdr = 0;
@@ -21,7 +19,6 @@ function update(dt, now) {
 	//scale gdx accordingly
 	gdx *= settings.scale;
 	gdy *= settings.scale;
-	// gdr = Math.sin(cumulativeTime) * 10;
 	settings.baseRadius = settings.startRadius + gdr;
 
 
