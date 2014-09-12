@@ -26,7 +26,6 @@
 		<!-- <div id = 'a'></div> -->
 		<canvas id = 'c'></canvas>
 	</body>
-	<script src='vendor/dat.gui.min.js'></script>
 	<script src='js/render.js'></script>
 	<script src='js/WaveGen.js'></script>
 	<script src='js/Block.js'></script>
@@ -35,9 +34,4 @@
 	<script src='js/Player.js'></script>
 	<script src='js/initialization.js'></script> 
 	<script src='js/CollisionDetection.js'></script>
-	<script>
-		var gui = new dat.GUI();
-		gui.add(Player.prototype, 'jumpForce', 0, 30);
-		gui.add(Player.prototype, 'maxJumps', 1, 5).step(1);
-	</script>
 </html>
