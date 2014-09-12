@@ -202,11 +202,16 @@ function AlternateGeneration(opts) {
 	}
 
 	var num = Math.floor(Math.random() * 3 + 3) * 2;
-	var angleMeasure = (Math.PI * 2)/num;
+	this.numToDelay = {
+		6:28,
+		8:31,
+		10:34,
+	};
 
+	var angleMeasure = (Math.PI * 2)/num;
 	this.update = function(dt) {
 		this.counter += dt;
-		if (this.counter > 60 * this.speedModifier && !this.stopped) {
+		if (this.counter > this.numToDelay[num] && !this.stopped) {
 			this.shouldShake = 0;
 			if (this.angle === false) {
 				this.angle = Math.random() * Math.PI * 2;
@@ -334,7 +339,7 @@ function RandomFastMultipleGeneration(opts) {
 			var color = colors[Math.floor(Math.random() * colors.length)];
 			for (var i = 0; i < num; i++) {
 				if (blocksToLeaveOpen.indexOf(i) == -1) {
-					var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter * (.9), angle:angle + i * angleMeasure, color:color, shouldShake:this.shouldShake});
+					var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter * 1.2, angle:angle + i * angleMeasure, color:color, shouldShake:this.shouldShake});
 					this.shouldShake = 1;
 					blocks.push(newBlock);
 					this.blocks.push(newBlock);
@@ -396,10 +401,10 @@ SinusoidalYAxisAugmentation.prototype.heartBeatSpeedDivisor = 17;
 function WaveGen() {
 	this.update = function(dt) {
 		if (this.shouldSwitch == -999999) {
-			this.loadConfig(this.configs[5]);
+			this.loadConfig(this.configs[this.configs.length - 1]);
 		} else if (this.shouldSwitch < 0) {
 			if (this.continueRemovingBlocks()) {
-				this.loadConfig(this.configs[5]); //Math.floor(this.configs.length * Math.random())
+				this.loadConfig(this.configs[this.configs.length - 1]); //Math.floor(this.configs.length * Math.random())
 			}
 		}
 
@@ -435,22 +440,6 @@ function WaveGen() {
 		switch (this.config[0]) {
 			case SpiralGeneration:
 			case RandomSlowMultipleGeneration:
-				// for (var i in this.patternQueue) {
-				// 	this.patternQueue[i].stopped = 1;
-				// 	if (this.patternQueue[i].blocks.length > 0) {
-				// 		ret = 0;
-				// 	}
-				// }
-
-				// for (var i in this.augmentationQueue) {
-				// 	this.augmentationQueue[i].stopped = 1;
-				// }
-
-				// if (ret) {
-				// 	this.augmentationQueue = [];
-				// 	this.patternQueue = [];
-				// }
-				// return ret;
 				threshold = 50;
 				break;
 		}
@@ -512,8 +501,8 @@ function WaveGen() {
 			[SingleGeneration,0], // good
 			[DoubleGeneration,0], // good
 			[TripleGeneration,0], // good
-			[AlternateGeneration,0],
-			[AlternateGeneration,0,{shouldDeleteBlocks:1}],
+			[AlternateGeneration,0], // done
+			[AlternateGeneration,0,{shouldDeleteBlocks:1}], // done
 			[RandomSlowMultipleGeneration,0], //good
 			[RandomFastMultipleGeneration,0]
 		];
