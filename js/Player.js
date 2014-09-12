@@ -5,7 +5,7 @@ function Player(opts) {
 	this.jumps = 0;
 	this.angle = 0;
 	this.angularWidth = .2;
-	this.angularVelocity = 0;	
+	this.angularVelocity = 0;
 	this.yOffset = 0;
 	this.yVelocity = 0;
 	this.numBodies = 1;
@@ -81,6 +81,8 @@ function Player(opts) {
 			this.angularVelocity = this.maxAngularVelocity * (this.angularVelocity < 0 ? -1 : 1);
 		}
 
+		this.angle += this.angularVelocity * dt;
+
 		this.yVelocity -= settings.gravity * dt;
 		this.yOffset += this.yVelocity * dt;
 		if (this.yOffset <= 0) {
@@ -101,7 +103,8 @@ function Player(opts) {
 			}
 		}
 		
-		this.angle += this.angularVelocity * dt;
+		
+		this.radius = settings.baseRadius + this.yOffset;
 		
 		for(var x = 0; x < players.length; x++ ){
 			if(isPLayerTouchingPlayer(this, players[x]) && this !== players[x]){
@@ -110,9 +113,9 @@ function Player(opts) {
 				this.angularVelocity = 0;
 			}
 		}
-
-		if (this.angle < 0) this.angle += 6.28;
-		if (this.angle > 6.28) this.angle -=6.28;
+		var twoPI = Math.PI * 2;
+		if (this.angle < 0) this.angle += twoPI;
+		if (this.angle > twoPI) this.angle -= twoPI;
 		this.radius = settings.baseRadius + this.yOffset;
 	};
 
