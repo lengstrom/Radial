@@ -1,7 +1,6 @@
 function init(a, restart) {
 	last = Date.now();
 	cumulativeTime = 0;
-
 	settings = {
 		startTime:last,
 		gravity:1,
@@ -15,19 +14,17 @@ function init(a, restart) {
 	};
 	endCt = 0;
 	colors = ["#e74c3c", "#f1c40f", "#3498db"];
-	blocks = [];
 	score = 0;
 	shakes = [];
 	gdx = 0;
 	gdr = 0;
 	gdy = 0;
-	gameState = 2;
+	gameState = (restart ? 2 : 0);
 	waveGen = new WaveGen();
 
 	// only do if restarting the first time
 	if (a) {
-		// document.getElementById('a').addEventListener('mousedown', function(){init(false, true)})
-
+		document.getElementById('a').addEventListener('mousedown', function(){init(0, 1)})
 		window.requestAnimFrame = (function() {
 			return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function(callback) {
 				window.setTimeout(callback, 1000 / framerate);
@@ -41,7 +38,7 @@ function init(a, restart) {
 		//input
 		document.addEventListener('keydown', function(e) {
 			if (e.keyCode == 13) {
-				init(false, true);
+				init(0, 1);
 			} else {
 				keys[e.keyCode] = 1;
 			}
@@ -49,7 +46,7 @@ function init(a, restart) {
 
 		window.addEventListener('blur', function(e) {
 			for (var i = 0; i < keys.length; i++) {
-				keys[i] = false;
+				keys[i] = 0;
 			}
 		});
 
@@ -66,14 +63,14 @@ function init(a, restart) {
 		canvas.addEventListener('mousedown tapstart')
 	}
 
-	// if (restart) {
-	// 	// document.getElementById('a').style.display = 'none';
-	// 	for (var i = 0; i < blocks.length; i++) {
-	// 		blocks[i].shouldDeleteSelf = 2 * settings.baseDistFromCenter; // covering all the bases
-	// 	}
-
-	// 	gameState = 1;
-	// }
+	if (restart) {
+		document.getElementById('a').style.display = 'none';
+		for (var i = 0; i < blocks.length; i++) {
+			blocks[i].shouldDeleteSelf = 2 * settings.baseDistFromCenter; // covering all the bases
+		}
+	} else {
+		blocks = [];
+	}
 
 	//rendering
 	scaleCanvas();

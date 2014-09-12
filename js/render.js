@@ -94,8 +94,9 @@ function render() {
 			ctx.fillStyle = '#ecf0f1';
 			ctx.fillRect(0, 0, c.height, c.width);
 			ctx.globalAlpha = 1;
-			fillText('110px Helvetica', 'Circletris', trueCanvas.width/2, trueCanvas.height/2 - 115 * settings.scale);
+			fillText('110px Helvetica', 'Centris', trueCanvas.width/2, trueCanvas.height/2 - 115 * settings.scale);
 			fillText('40px Helvetica', 'Play!', trueCanvas.width/2, trueCanvas.height/2);
+			break;
 
 		case 2:
 			fillText('40px Helvetica', score, trueCanvas.width/2, trueCanvas.height/2);
@@ -112,7 +113,6 @@ function render() {
 			ctx.globalAlpha = 1;
 			break;
 	}
-	// ctx.fillStyle = '#232323';
 }
 
 function fillText(font, name, x, y) {
@@ -121,6 +121,6 @@ function fillText(font, name, x, y) {
 	ctx.fillStyle = '#ecf0f1';
 	ctx.textBaseline = 'middle';
 	ctx.font = font;
-	ctx.fillText(name, (x - ((ctx.measureText(name).width) * settings.scale)/2) / settings.scale, y/settings.scale);
+	ctx.fillText(name, (x - ((ctx.measureText(name).width) * settings.scale)/2) / settings.scale + gdx * settings.scale, y/settings.scale + gdy * settings.scale);
 	ctx.restore();
 }

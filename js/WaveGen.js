@@ -21,7 +21,6 @@ function SingleGeneration(opts) {
 	this.update = function(dt) {
 		this.counter += dt;
 		if (!this.stopped && this.counter > this.numToDelay[num]) {
-			console.log(num, 60 * this.speedModifier);
 			this.counter = 0;
 			var tempAngle = Math.random() * Math.PI * 2;
 			while (Math.abs(tempAngle - angle) < angleMeasure * (5/6)) {
@@ -401,8 +400,13 @@ SinusoidalYAxisAugmentation.prototype.heartBeatSpeedDivisor = 17;
 function WaveGen() {
 	this.update = function(dt) {
 		if (this.shouldSwitch == -999999) {
-			this.loadConfig(this.configs[3]);
-		} else if (this.shouldSwitch < 0) {
+			if (gameState == 0) {
+				this.loadConfig([StartScreen, RotationAugmentation]);
+			}
+			else {
+				this.loadConfig(this.configs[3]);
+			}
+		} else if (gameState != 0 && this.shouldSwitch < 0) {
 			if (this.continueRemovingBlocks()) {
 				this.loadConfig(this.configs[Math.floor(this.configs.length * Math.random())]);
 			}
