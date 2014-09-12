@@ -10,8 +10,28 @@ function isPlayerTouchingBlock(player, block){
 	var playerHeightBottom = player.yOffset + window.settings.baseRadius;
 	var playerHeightTop = playerHeightBottom + player.sideLength;
 
-	var blockTop = block.angle + block.angularWidth/2;
-	var blockBottom = block.angle - block.angularWidth/2; 
+	var playerTop = player.angle+player.angularWidth/2;
+	var playerBottom = player.angle-player.angularWidth/2;
+
+	playerTop += playerTop < 0 ? 6.28 : 0;
+	playerBottom += playerBottom < 0 ? 6.28 : 0;
+	playerTop += playerBottom > playerTop ? 6.28 : 0;
+
+	var blockTop = (block.angle + block.angularWidth/2)%6.28;
+	var blockBottom = (block.angle - block.angularWidth/2)%6.28; 
+	//Incoming literally awful code.
+	blockTop += blockTop < 0 ? 6.28 : 0;
+	blockBottom += blockBottom < 0 ? 6.28 : 0;
+	if (blockBottom > blockTop){
+		blockTop += 6.28;
+		playerTop += 6.28;
+		playerBottom += 6.28;
+		if(playerBottom > 6.28){
+			playerTop -= 6.28;
+			playerBottom -=6.28;
+		}
+	}
+
 	/*
 	console.log("playerHeightBottom:" + playerHeightBottom);
 	console.log("playerHeightTop:" + playerHeightTop);
@@ -23,15 +43,17 @@ function isPlayerTouchingBlock(player, block){
 	//console.log("blockBottomAngle: " + blockBottom%6.28);
 	//console.log("player.angle: " + player.angle%6.28); 
 	//*/
-	if (block.distFromCenter >= playerHeightBottom && block.distFromCenter <= playerHeightTop
-		&& player.angle%6.28 < blockTop%6.28 && player.angle%6.28 > blockBottom%6.28){
-		(player.color == "#FFFFFF") ? player.color = "#000000" : player.color = "#FFFFFF";
-		 // console.log("HIT!");
-		return true;
-	}
+	if (block.distFromCenter >= playerHeightBottom && block.distFromCenter <= playerHeightTop){ //Vertical Match
+		if((playerBottom < blockTop && playerTop > blockTop)
+		||(playerBottom < blockBottom && playerTop > blockBottom)
+		||(playerBottom > blockBottom && playerTop < blockTop)){//Horizontal Match
+			(player.color == "#FFFFFF") ? player.color = "#000000" : player.color = "#FFFFFF";
+			 console.log("HIT!");
+			 	//debugger;
+			return true;	
+		}  
 		return false;
 	}
-
 }
 
 function isPLayerTouchingPlayer(player1, player2) {
@@ -85,6 +107,7 @@ function isPLayerTouchingPlayer(player1, player2) {
 	console.log("player2Bottom: " + player2Bottom);
 	*/
 	//Touching bottom
+	/*
 	if((player1HeightTop >= player2HeightBottom) && player1HeightTop < (player2HeightBottom + Math.abs(player1.yVelocity))){
 		//Coming from bottom
 		if((player1Top >= player2Bottom && player1Top <= player2Top) 
@@ -103,7 +126,19 @@ function isPLayerTouchingPlayer(player1, player2) {
 			} //Angles overlap one way or another
 		
 	}
-	
+	*/
+
+	if ((player1HeightBottom >= player2HeightBottom && player1HeightBottom <= player2HeightTop)
+		|| (player2HeightBottom >= player1HeightBottom && player2HeightBottom <= player1HeightTop)){//Heights overlap one way or another
+		if((player1Top >= player2Bottom && player1Top <= player2Top) 
+			||(player2Top >= player1Bottom && player2Top <= player1Top)) //Angles overlap one way or another
+		{
+			//player1.color = "#AFAFAF";
+			//player2.color = "#FFAAFF";
+			return true;
+		}
+		return false;
+	}
 	//Touching left
 
 
@@ -120,7 +155,7 @@ function isPLayerTouchingPlayer(player1, player2) {
 			player1.color = "#AFAFAF";
 			//player2.color = "#FFAAFF";
 			return true;
-		
+		}
 		*/
 }
 
