@@ -27,8 +27,10 @@ function Player(opts) {
 		var normalizedAcceleration = dt * this.acceleration;
 
 		for (var x = 0; x < blocks.length; x++ ){
-			// console.log(blocks[x].distFromCenter)
-			if (blocks[x].gameState == 2 && isPlayerTouchingBlock(this, blocks[x])){
+			 //console.log(blocks[x].distFromCenter)
+			//debugger;
+			if (blocks[x].state == 2 && isPlayerTouchingBlock(this, blocks[x])){
+
 				endGame();
 				//console.log("touch!");
 			}			

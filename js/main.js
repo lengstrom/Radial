@@ -15,6 +15,7 @@ function animLoop() {
 			break;
 
 		case 3: //game end
+		console.log("dead");
 			break;
 	}
 

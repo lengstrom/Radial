@@ -1,7 +1,9 @@
 function isPlayerTouchingBlock(player, block){	
-	if (block != null){
-	/*
 	console.log("collision detection begin");
+	if (block != null){
+	
+
+	/*
 	console.log("Blocks.length" + blocks.length);
 	console.log("Base Radius:" + window.settings.baseRadius);
 	console.log("Player yOffset:" + player.yOffset);
@@ -54,6 +56,7 @@ function isPlayerTouchingBlock(player, block){
 		}  
 		return false;
 	}
+}
 }
 
 function isPLayerTouchingPlayer(player1, player2) {
