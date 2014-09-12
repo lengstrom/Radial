@@ -160,7 +160,7 @@ function Player(opts) {
 			if(this.radius > 140) debugger;
 			*/
 
-			drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle + this.angularWidth/2), (this.angle - this.angularWidth/2), this.sideLength, this.radius + gdr, "#FFFFFF");
+			drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle + this.angularWidth/2), (this.angle - this.angularWidth/2), this.sideLength, this.radius + gdr, this.color);
 			//console.log("End Draw Cone");
 			
 			//drawRect(trueCanvas.width/2 + ss * Math.cos(angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - angle) * ss, trueCanvas.height/2 + Math.sin(angle) * this.radius * ss + (-this.sideLength/2) * Math.cos(2 * Math.PI - angle) * ss, this.sideLength, this.color, angle, (this.yOffset == 0));
