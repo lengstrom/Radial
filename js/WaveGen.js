@@ -11,7 +11,7 @@ function SingleGeneration(opts) {
 	var angleMeasure = (Math.PI)/Math.floor(Math.random() * 4 + 1);
 	this.update = function(dt) {
 		this.counter += dt;
-		if (this.counter > 40 * this.speedModifier * (1 - .8 * ((num - 1)/5))) {
+		if (!this.stopped && this.counter > 40 * this.speedModifier * (1 - .8 * ((num - 1)/5))) {
 			this.counter = 0;
 			var tempAngle = Math.random() * Math.PI * 2;
 			while (Math.abs(tempAngle - angle) < angleMeasure * (5/6)) {
@@ -69,7 +69,7 @@ function DoubleGeneration(opts) {
 	var angleMeasure = (Math.PI * 2)/num;
 	this.update = function(dt) {
 		this.counter += dt;
-		if (this.counter > 30 * this.speedModifier * (num)/7) {
+		if (!this.stopped && this.counter > 30 * this.speedModifier * (num)/7) {
 			this.shouldShake = 0;
 			this.counter = 0;
 			var tempAngle = Math.random() * Math.PI * 2;
@@ -103,7 +103,7 @@ function TripleGeneration(opts) {
 	var angleMeasure = (Math.PI * 2)/num;
 	this.update = function(dt) {
 		this.counter += dt;
-		if (this.counter > 30 * this.speedModifier - (1 - 1 * (num + 6)/12) * 70) {
+		if (!this.stopped && this.counter > 30 * this.speedModifier - (1 - 1 * (num + 6)/12) * 70) {
 			this.shouldShake = 0;
 			this.counter = 0;
 			var tempAngle = Math.random() * Math.PI * 2;
@@ -142,7 +142,7 @@ function SpiralGeneration(opts) {
 	this.speedModifier = .72;
 	this.speedModifier *= (num)/(12);
 	this.update = function(dt) {
-		if ((this.blocks.length == 0 || (settings.baseDistFromCenter - Block.prototype.blockHeight)/(settings.baseIter * this.speedModifier) + 1 + settings.initTime >= (this.blocks[this.blocks.length - 1].distFromCenter)/(settings.baseIter * this.speedModifier) + (settings.initTime - this.blocks[this.blocks.length - 1].counter))) {
+		if (!this.stopped && (this.blocks.length == 0 || (settings.baseDistFromCenter - Block.prototype.blockHeight)/(settings.baseIter * this.speedModifier) + 1 + settings.initTime >= (this.blocks[this.blocks.length - 1].distFromCenter)/(settings.baseIter * this.speedModifier) + (settings.initTime - this.blocks[this.blocks.length - 1].counter))) {
 			// if (this.switch % 60 > 30) {
 			// 	angle -= angleMeasure;
 			// } else {
@@ -179,7 +179,7 @@ function AlternateGeneration(opts) {
 
 	this.update = function(dt) {
 		this.counter += dt;
-		if (this.counter > 60 * this.speedModifier) {
+		if (this.counter > 60 * this.speedModifier && !this.stopped) {
 			this.shouldShake = 0;
 			if (this.angle === false) {
 				this.angle = Math.random() * Math.PI * 2;
@@ -213,7 +213,7 @@ function AlternateGeneration(opts) {
 }
 
 function RandomSlowMultipleGeneration(opts) {
-	this.counter = 0;
+	this.counter = -1;
 	this.blocks = [];
 	this.shouldShake = 0;
 	this.openings = [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3];
@@ -227,36 +227,46 @@ function RandomSlowMultipleGeneration(opts) {
 	this.speedModifier = .8;
 	this.update = function(dt) {
 		this.counter += dt;
-		if (this.counter > 100 * this.speedModifier) {
-			this.shouldShake = 0;
-			this.counter = 0;
-			var tempAngle = Math.random() * Math.PI * 2;
-			while (Math.abs(tempAngle - angle) < Math.PI/2) {
-				tempAngle = Math.random() * Math.PI * 2;
+		if (this.counter == -1) {
+			for (var i = 0; i * 100 < settings.baseDistFromCenter - settings.baseRadius - 100; i++) {
+				this.makeBlockSet(settings.baseDistFromCenter - i * 100);
 			}
-
-			angle = tempAngle;
-			var numBlocksOpen = Math.floor(Math.random() * (this.openings[num]) + 1);
-			var blocksToLeaveOpen = [];
-			var blocking = 0;
-			while (numBlocksOpen > 0) {
-				var t = Math.floor(Math.random() * (num));
-				if (blocksToLeaveOpen.indexOf(t) == -1) {
-					blocksToLeaveOpen.push(t);
-					numBlocksOpen--;
-				}
-			}
-			var color = colors[Math.floor(Math.random() * colors.length)];
-			for (var i = 0; i < num; i++) {
-				if (blocksToLeaveOpen.indexOf(i) == -1) {
-					var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter * (1/6), angle:angle + i * angleMeasure, color:color, shouldShake:this.shouldShake});
-					this.shouldShake = 1;
-					blocks.push(newBlock);
-					this.blocks.push(newBlock);
-				}
+		} else {
+			if (this.counter > 100 * this.speedModifier && !this.stopped) {
+				this.makeBlockSet();
 			}
 		}
 	};
+
+	this.makeBlockSet = function(d) {
+		this.shouldShake = 0;
+		this.counter = 0;
+		var tempAngle = Math.random() * Math.PI * 2;
+		while (Math.abs(tempAngle - angle) < Math.PI/2) {
+			tempAngle = Math.random() * Math.PI * 2;
+		}
+
+		angle = tempAngle;
+		var numBlocksOpen = Math.floor(Math.random() * (this.openings[num]) + 1);
+		var blocksToLeaveOpen = [];
+		var blocking = 0;
+		while (numBlocksOpen > 0) {
+			var t = Math.floor(Math.random() * (num));
+			if (blocksToLeaveOpen.indexOf(t) == -1) {
+				blocksToLeaveOpen.push(t);
+				numBlocksOpen--;
+			}
+		}
+		var color = colors[Math.floor(Math.random() * colors.length)];
+		for (var i = 0; i < num; i++) {
+			if (blocksToLeaveOpen.indexOf(i) == -1) {
+				var newBlock = new Block({distFromCenter:d, parent:this, angularWidth:angleMeasure, iter:settings.baseIter * (1/6), angle:angle + i * angleMeasure, color:color, shouldShake:this.shouldShake});
+				this.shouldShake = 1;
+				blocks.push(newBlock);
+				this.blocks.push(newBlock);
+			}
+		}
+	}
 }
 
 function RandomFastMultipleGeneration(opts) {
@@ -273,7 +283,7 @@ function RandomFastMultipleGeneration(opts) {
 	var angleMeasure = (Math.PI * 2)/num;
 	this.update = function(dt) {
 		this.counter += dt;
-		if (this.counter > 55) {
+		if (this.counter > 55 && !this.stopped) {
 			this.shouldShake = 0;
 			this.counter = 0;
 			var tempAngle = Math.random() * Math.PI * 2;
@@ -356,32 +366,111 @@ SinusoidalYAxisAugmentation.prototype.heartBeatSpeedDivisor = 17;
 
 function WaveGen() {
 	this.update = function(dt) {
-		if (this.shouldSwitch == -9) {
+		if (this.shouldSwitch == -999999) {
 			this.loadConfig(this.configs[3]);
 		} else if (this.shouldSwitch < 0) {
-			this.loadConfig(this.configs[Math.floor(Math.random() * this.configs.length)]);
+			if (this.continueRemovingBlocks()) {
+				this.loadConfig(this.configs[Math.floor(Math.random() * this.configs.length)], 1);
+			}
 		}
 
 		// this.speedModifier = 1 - (this.counter)/(this.maxSpeedTime * 60) * .5;
-		for (var i = 0; i < this.augmentationQueue.length; i++) {
-			this.augmentationQueue[i].update(dt);
+		var del = 0;
+		for (var i = 0; i < this.patternQueue.length; i++) {
+			if (!this.patternQueue[this.patternQueue.length - 1].stopped || i == this.patternQueue.length - 1) {
+				this.patternQueue[i].update(dt);
+				this.shouldSwitch -= dt;
+			}
+
+			for (var j in this.patternQueue[i].blocks) {
+				if (this.patternQueue[i].blocks[j].state == 3) {
+					this.patternQueue[i].blocks.splice(j, 1);
+					j--;
+				}
+			}
 		}
 
-		for (var i = 0; i < this.patternQueue.length; i++) {
-			this.patternQueue[i].update(dt);
+		for (var i in this.augmentationQueue) {
+			this.augmentationQueue[i].update(dt);
 		}
 	};
 
+	this.continueRemovingBlocks = function() {
+		if (!this.config) return 1;
+		for (var i = 0; i < this.patternQueue.length; i++) {
+			this.patternQueue[i].stopped = 1;
+		}
+
+		var ret = 1;
+		var threshold = 200;
+		switch (this.config[0]) {
+			case SpiralGeneration:
+			case RandomSlowMultipleGeneration:
+				// for (var i in this.patternQueue) {
+				// 	this.patternQueue[i].stopped = 1;
+				// 	if (this.patternQueue[i].blocks.length > 0) {
+				// 		ret = 0;
+				// 	}
+				// }
+
+				// for (var i in this.augmentationQueue) {
+				// 	this.augmentationQueue[i].stopped = 1;
+				// }
+
+				// if (ret) {
+				// 	this.augmentationQueue = [];
+				// 	this.patternQueue = [];
+				// }
+				// return ret;
+				threshold = 50;
+				break;
+		}
+
+		var lastBlockTime = 0;
+		if (this.patternQueue.length > 0) {
+			for (var i = 0; i < this.patternQueue[0].blocks.length; i++) {
+				var q = this.patternQueue[0].blocks[i];
+				var dist = (q.distFromCenter - settings.baseRadius)/q.iter;
+				if (lastBlockTime < dist) {
+					lastBlockTime = dist;
+				}
+			}
+		}
+
+		if (lastBlockTime < threshold) {
+			this.patternQueue = [];
+			this.augmentationQueue = [];
+			return 1;
+		}
+		return 0;
+	}
+
 	this.loadConfig = function(config) {
+		this.config = config;
 		var generator = new config[0](config.length == 3 ? config[2] : {});
 		this.patternQueue.push(generator);
-		if (config.length > 2) {
-			this.augments.push(new (config[1])(generator));
+		if (config[1]) {
+			this.augmentationQueue.push(new (config[1])(generator));
+		}
+
+		var lastBlockTime = 0;
+
+		switch (config[0]) {
+			case SingleGeneration:
+			case DoubleGeneration:
+			case TripleGeneration:
+			case AlternateGeneration:
+				this.shouldSwitch = (600 + (Math.random() > .5 ? -1 : 1) * Math.random() * 180)/4;
+				break;
+
+			default:
+				this.shouldSwitch = (1000 + (Math.random() > .5 ? -1 : 1) * Math.random() * 180)/4;
+				break;
 		}
 	}
 
 	this.init = function() {
-		this.shouldSwitch = -9;
+		this.shouldSwitch = -999999;
 		this.counter = 0;
 		this.speedModifier = 1;
 		this.patternQueue = [];

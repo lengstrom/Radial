@@ -65,7 +65,7 @@ function init(a, restart) {
 	}
 
 	if (restart) {
-		document.getElementById('a').style.display = 'none';
+		// document.getElementById('a').style.display = 'none';
 		for (var i = 0; i < blocks.length; i++) {
 			blocks[i].shouldDeleteSelf = 2 * settings.baseDistFromCenter; // covering all the bases
 		}
