@@ -3,6 +3,7 @@ function init(a, restart) {
 	cumulativeTime = 0;
 
 	settings = {
+		startTime:last,
 		gravity:1,
 		startRadius:110,
 		baseRadius:110,
@@ -12,9 +13,10 @@ function init(a, restart) {
 		shakeMagnitude:20 * (window.devicePixelRatio ? window.devicePixelRatio : 1),
 		baseIter:5
 	};
-
+	endCt = 0;
 	colors = ["#e74c3c", "#f1c40f", "#3498db"];
 	blocks = [];
+	score = 0;
 	shakes = [];
 	gdx = 0;
 	gdr = 0;
@@ -64,14 +66,14 @@ function init(a, restart) {
 		canvas.addEventListener('mousedown tapstart')
 	}
 
-	if (restart) {
-		// document.getElementById('a').style.display = 'none';
-		for (var i = 0; i < blocks.length; i++) {
-			blocks[i].shouldDeleteSelf = 2 * settings.baseDistFromCenter; // covering all the bases
-		}
+	// if (restart) {
+	// 	// document.getElementById('a').style.display = 'none';
+	// 	for (var i = 0; i < blocks.length; i++) {
+	// 		blocks[i].shouldDeleteSelf = 2 * settings.baseDistFromCenter; // covering all the bases
+	// 	}
 
-		gameState = 1;
-	}
+	// 	gameState = 1;
+	// }
 
 	//rendering
 	scaleCanvas();
@@ -81,8 +83,7 @@ function init(a, restart) {
 
 	// change later
 	player1 = new Player({
-		color:'#3498db',
-		numBodies:1
+		color:'#3498db'
 	});
 
 	// player2 = new Player({
@@ -98,3 +99,7 @@ function init(a, restart) {
 
 init(1);
 requestAnimFrame(animLoop);
+
+function endGame() {
+	gameState = 3;
+}

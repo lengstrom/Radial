@@ -28,7 +28,8 @@ function Player(opts) {
 
 		for (var x = 0; x < blocks.length; x++ ){
 			// console.log(blocks[x].distFromCenter)
-			if (isPlayerTouchingBlock(this, blocks[x])){
+			if (blocks[x].gameState == 2 && isPlayerTouchingBlock(this, blocks[x])){
+				endGame();
 				//console.log("touch!");
 			}			
 			else {

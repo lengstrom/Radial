@@ -89,20 +89,38 @@ function render() {
 	}
 
 	switch (gameState) {
-		default:
-			// ctx.globalAlpha = .3;
-			// ctx.fillStyle = '#ecf0f1';
-			// ctx.fillRect(0, 0, c.height, c.width);
-			// ctx.globalAlpha = 1;
-			// fillText('110px Helvetica', 'Circletris', trueCanvas.width/2, trueCanvas.height/2 - 115 * settings.scale)
-			// fillText('40px Helvetica', 'Play!', trueCanvas.width/2, trueCanvas.height/2)
+		case 0:
+			ctx.globalAlpha = .3;
+			ctx.fillStyle = '#ecf0f1';
+			ctx.fillRect(0, 0, c.height, c.width);
+			ctx.globalAlpha = 1;
+			fillText('110px Helvetica', 'Circletris', trueCanvas.width/2, trueCanvas.height/2 - 115 * settings.scale);
+			fillText('40px Helvetica', 'Play!', trueCanvas.width/2, trueCanvas.height/2);
+
+		case 2:
+			fillText('40px Helvetica', score, trueCanvas.width/2, trueCanvas.height/2);
+			break;
+
+		case 3:
+			if (endCt < 1) endCt += .01;
+			ctx.globalAlpha = endCt > .7 ? .7 : endCt;
+			ctx.fillStyle = '#000';
+			ctx.fillRect(0, 0, trueCanvas.width, trueCanvas.height);
+			fillText('90px Helvetica', 'Game over', trueCanvas.width/2, trueCanvas.height/2 - 75 * settings.scale);
+			fillText('50px Helvetica', 'Score: ' + score, trueCanvas.width/2, trueCanvas.height/2);
+			fillText('30px Helvetica', 'Hit enter to restart!', trueCanvas.width/2, trueCanvas.height/2 + 60 * settings.scale);
+			ctx.globalAlpha = 1;
+			break;
 	}
 	// ctx.fillStyle = '#232323';
 }
 
-function fillText(font, name, x, y, color) {
+function fillText(font, name, x, y) {
+	ctx.save();
+	ctx.scale(settings.scale,settings.scale);
 	ctx.fillStyle = '#ecf0f1';
 	ctx.textBaseline = 'middle';
 	ctx.font = font;
-	ctx.fillText(name, x - ctx.measureText(name).width/2, y);
+	ctx.fillText(name, (x - ((ctx.measureText(name).width) * settings.scale)/2) / settings.scale, y/settings.scale);
+	ctx.restore();
 }

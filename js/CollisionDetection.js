@@ -29,7 +29,7 @@ function isPlayerTouchingBlock(player, block){
 		 // console.log("HIT!");
 		return true;
 	}
-	return false;
+		return false;
 	}
 
 }

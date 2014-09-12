@@ -401,10 +401,10 @@ SinusoidalYAxisAugmentation.prototype.heartBeatSpeedDivisor = 17;
 function WaveGen() {
 	this.update = function(dt) {
 		if (this.shouldSwitch == -999999) {
-			this.loadConfig(this.configs[this.configs.length - 1]);
+			this.loadConfig(this.configs[3]);
 		} else if (this.shouldSwitch < 0) {
 			if (this.continueRemovingBlocks()) {
-				this.loadConfig(this.configs[this.configs.length - 1]); //Math.floor(this.configs.length * Math.random())
+				this.loadConfig(this.configs[Math.floor(this.configs.length * Math.random())]);
 			}
 		}
 
