@@ -85,12 +85,12 @@ function init(a, restart) {
 		numBodies:1
 	});
 
-	player2 = new Player({
-		angle:Math.PI,
-		keyBindings:[65, 68, 87], // a / d
-		color:'#e74c3c',
-		numBodies:1
-	});
+	// player2 = new Player({
+	// 	angle:Math.PI,
+	// 	keyBindings:[65, 68, 87], // a / d
+	// 	color:'#e74c3c',
+	// 	numBodies:1
+	// });
 
 	blocks.push();
 }
