@@ -480,7 +480,6 @@ function WaveGen() {
 			case AlternateGeneration:
 				this.shouldSwitch = (300 + (Math.random() > .5 ? -1 : 1) * Math.random() * 60);
 				break;
-
 			default:
 				this.shouldSwitch = (250 + (Math.random() > .5 ? -1 : 1) * Math.random() * 45);
 				break;
