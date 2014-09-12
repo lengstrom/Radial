@@ -5,7 +5,7 @@ function Player(opts) {
 	this.jumps = 0;
 	this.angle = 0;
 	this.angularWidth = .2;
-	this.angularVelocity = 0;
+	this.angularVelocity = 0;	
 	this.yOffset = 0;
 	this.yVelocity = 0;
 	this.numBodies = 1;
@@ -77,8 +77,8 @@ function Player(opts) {
 			}
 		}
 
-		if (Math.abs(this.angularVelocity) > (5/180) * Math.PI) {
-			this.angularVelocity = (5/180) * Math.PI * (this.angularVelocity < 0 ? -1 : 1);
+		if (Math.abs(this.angularVelocity) > this.MaxAngularVelocity) {
+			this.angularVelocity = this.maxAngularVelocity * (this.angularVelocity < 0 ? -1 : 1);
 		}
 
 		this.yVelocity -= settings.gravity * dt;
@@ -167,3 +167,4 @@ function Player(opts) {
 
 Player.prototype.jumpForce = 16;
 Player.prototype.maxJumps = 3;
+Player.prototype.maxAngularVelocity = 5/180 * Math.PI

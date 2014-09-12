@@ -65,6 +65,64 @@ function isPLayerTouchingPlayer(player1, player2) {
 	}
 }
 
+function isPLayerTouchingPlayer(player1, player2) {
+	var player1HeightBottom = player1.yOffset + window.settings.baseRadius;
+	var player1HeightTop = player1HeightBottom + player1.sideLength;
+
+	var player1Top = player1.angle + player1.angularWidth/2;
+	var player1Bottom = player1.angle - player1.angularWidth/2;
+
+	var player2HeightBottom = player2.yOffset + window.settings.baseRadius;
+	var player2HeightTop = player2HeightBottom + player2.sideLength;
+
+	var player2Top = player2.angle + player2.angularWidth/2;
+	var player2Bottom = player2.angle - player2.angularWidth/2;
+	/*
+	console.log("player1Top: " + player1Top);
+	console.log("player1Bottom: " + player1Bottom);
+
+	console.log("player2Top: " + player2Top);
+	console.log("player2Bottom: " + player2Bottom);
+	*/
+	//Touching bottom
+	if((player1HeightTop >= player2HeightBottom) && player1HeightTop < (player2HeightBottom + Math.abs(player1.yVelocity))){
+		//Coming from bottom
+		if((player1Top >= player2Bottom && player1Top <= player2Top) 
+			||(player2Top >= player1Bottom && player2Top <= player1Top)){
+				console.log("bottom connect");
+					//debugger;
+			} //Angles overlap one way or another
+	}
+	
+	if((player1HeightBottom <= player2HeightTop) && player1HeightBottom > (player2HeightTop - Math.abs(player1.yVelocity))){
+		//Coming from top
+		if((player1Top >= player2Bottom && player1Top <= player2Top) 
+			||(player2Top >= player1Bottom && player2Top <= player1Top)){
+				console.log("top connect");
+						//debugger;
+			} //Angles overlap one way or another
+		
+	}
+	
+	//Touching left
+
+
+	//Touching Right
+
+
+	//Touching Top
+	/*
+	if ((player1HeightBottom >= player2HeightBottom && player1HeightBottom <= player2HeightTop)
+		|| (player2HeightBottom >= player1HeightBottom && player2HeightBottom <= player1HeightTop)){//Heights overlap one way or another
+		if((player1Top >= player2Bottom && player1Top <= player2Top) 
+			||(player2Top >= player1Bottom && player2Top <= player1Top)) //Angles overlap one way or another
+		{
+			player1.color = "#AFAFAF";
+			//player2.color = "#FFAAFF";
+			return true;
+		
+		*/
+}
 
 
 function currentlyTouching() {
