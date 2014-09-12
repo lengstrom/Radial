@@ -68,18 +68,12 @@ function Player(opts) {
 		}
 
 		if (!keys[this.keyBindings[1]] && !keys[this.keyBindings[0]]) {
-			if (this.angularVelocity < -4 * normalizedAcceleration) {
-				this.angularVelocity += 4 * normalizedAcceleration;
-			} else if (this.angularVelocity > 4 * normalizedAcceleration) {
-				this.angularVelocity -= 4 * normalizedAcceleration
-			} else {
-				this.angularVelocity = 0;
-			}
+				this.angularVelocity *= .75*dt;
 		}
 
 		// console.log(this.angularVelocity);
 		if (Math.abs(this.angularVelocity) > this.maxAngularVelocity) {
-			this.angularVelocity = this.maxAngularVelocity * (this.angularVelocity < 0 ? -1 : 1);
+			this.angularVelocity -= this.angularDeceleration * dt * (this.angularVelocity < 0 ? -1 : 1);
 		}
 
 		this.angle += this.angularVelocity * dt;
@@ -100,7 +94,7 @@ function Player(opts) {
 		for(var x = 0; x < players.length; x++ ){
 			if(isPLayerTouchingPlayer(this, players[x]) && this !== players[x]){
 				// console.log("P1/P2 Touching");
-				this.angularVelocity = 0;
+				//this.angularVelocity = -this.angularVelocity*2;
 			}
 		}
 
@@ -110,7 +104,8 @@ function Player(opts) {
 			if(isPLayerTouchingPlayer(this, players[x]) && this !== players[x]){
 				// console.log("P1/P2 Touching");
 				this.angle -= this.angularVelocity * dt;
-				this.angularVelocity = 0;
+				this.angularVelocity = -this.angularVelocity*2;
+				players[x].angularVelocity = -this.angularVelocity*2;
 			}
 		}
 
@@ -172,4 +167,5 @@ function Player(opts) {
 
 Player.prototype.jumpForce = 16;
 Player.prototype.maxJumps = 3;
-Player.prototype.maxAngularVelocity = 5/180 * Math.PI
+Player.prototype.maxAngularVelocity = 5/180 * Math.PI;
+Player.prototype.angularDeceleration = 1/180 * Math.PI;
