@@ -22,7 +22,15 @@ function isPlayerTouchingBlock(player, block){
 
 	blockTop += blockTop < 0 ? 6.28 : 0;
 	blockBottom += blockBottom < 0 ? 6.28 : 0;
-	blockTop += blockBottom > blockTop ? 6.28 : 0;
+	if (blockBottom > blockTop){
+		blockTop += 6.28;
+		playerTop += 6.28;
+		playerBottom += 6.28;
+		if(playerBottom > 6.28){
+			playerTop -= 6.28;
+			playerBottom -=6.28;
+		}
+	}
 
 	/*
 	console.log("playerHeightBottom:" + playerHeightBottom);
