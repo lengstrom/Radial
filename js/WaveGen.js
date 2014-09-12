@@ -226,16 +226,18 @@ function RandomSlowMultipleGeneration(opts) {
 	var angleMeasure = (Math.PI * 2)/num;
 	this.speedModifier = .8;
 	this.update = function(dt) {
-		this.counter += dt;
 		if (this.counter == -1) {
-			for (var i = 0; i * 100 < settings.baseDistFromCenter - settings.baseRadius - 100; i++) {
-				this.makeBlockSet(settings.baseDistFromCenter - i * 100);
+			for (var i = 0; i * 100 * this.speedModifier < settings.baseDistFromCenter - settings.baseRadius - 120; i++) {
+				this.makeBlockSet(settings.baseDistFromCenter - i * 100 * this.speedModifier);
 			}
 		} else {
 			if (this.counter > 100 * this.speedModifier && !this.stopped) {
+				debugger;
 				this.makeBlockSet();
 			}
 		}
+
+		this.counter += dt;
 	};
 
 	this.makeBlockSet = function(d) {
@@ -260,7 +262,7 @@ function RandomSlowMultipleGeneration(opts) {
 		var color = colors[Math.floor(Math.random() * colors.length)];
 		for (var i = 0; i < num; i++) {
 			if (blocksToLeaveOpen.indexOf(i) == -1) {
-				var newBlock = new Block({distFromCenter:d, parent:this, angularWidth:angleMeasure, iter:settings.baseIter * (1/6), angle:angle + i * angleMeasure, color:color, shouldShake:this.shouldShake});
+				var newBlock = new Block({distFromCenter:d ? d : settings.baseDistFromCenter, parent:this, angularWidth:angleMeasure, iter:settings.baseIter * (1/6), angle:angle + i * angleMeasure, color:color, shouldShake:this.shouldShake});
 				this.shouldShake = 1;
 				blocks.push(newBlock);
 				this.blocks.push(newBlock);
@@ -370,7 +372,7 @@ function WaveGen() {
 			this.loadConfig(this.configs[3]);
 		} else if (this.shouldSwitch < 0) {
 			if (this.continueRemovingBlocks()) {
-				this.loadConfig(this.configs[Math.floor(Math.random() * this.configs.length)], 1);
+				this.loadConfig(this.configs[Math.floor(this.configs.length * Math.random())]);
 			}
 		}
 
@@ -402,7 +404,7 @@ function WaveGen() {
 		}
 
 		var ret = 1;
-		var threshold = 200;
+		var threshold = 400;
 		switch (this.config[0]) {
 			case SpiralGeneration:
 			case RandomSlowMultipleGeneration:
@@ -439,7 +441,7 @@ function WaveGen() {
 
 		if (lastBlockTime < threshold) {
 			this.patternQueue = [];
-			this.augmentationQueue = [];
+			if (this.augmentationQueue.length > 2) this.augmentationQueue.splice(0, 1);
 			return 1;
 		}
 		return 0;
@@ -460,11 +462,11 @@ function WaveGen() {
 			case DoubleGeneration:
 			case TripleGeneration:
 			case AlternateGeneration:
-				this.shouldSwitch = (600 + (Math.random() > .5 ? -1 : 1) * Math.random() * 180)/4;
+				this.shouldSwitch = (300 + (Math.random() > .5 ? -1 : 1) * Math.random() * 60);
 				break;
 
 			default:
-				this.shouldSwitch = (1000 + (Math.random() > .5 ? -1 : 1) * Math.random() * 180)/4;
+				this.shouldSwitch = (250 + (Math.random() > .5 ? -1 : 1) * Math.random() * 45);
 				break;
 		}
 	}
