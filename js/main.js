@@ -6,6 +6,11 @@ function animLoop() {
 			break;
 
 		case 1: //transition from main menu to gameplay
+			// update(dt, now);
+			// last = now;
+			// if (blocks.length == 0) {
+			// 	gameState = 2;
+			// }
 			break;
 
 		case 2: //gameplay

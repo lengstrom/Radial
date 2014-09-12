@@ -88,12 +88,12 @@ function render() {
 
 	switch (gameState) {
 		default:
-			ctx.globalAlpha = .3;
-			ctx.fillStyle = '#ecf0f1';
-			ctx.fillRect(0, 0, c.height, c.width);
-			ctx.globalAlpha = 1;
-			fillText('110px Helvetica', 'Circletris', trueCanvas.width/2, trueCanvas.height/2 - 115 * settings.scale)
-			fillText('40px Helvetica', 'Play!', trueCanvas.width/2, trueCanvas.height/2)
+			// ctx.globalAlpha = .3;
+			// ctx.fillStyle = '#ecf0f1';
+			// ctx.fillRect(0, 0, c.height, c.width);
+			// ctx.globalAlpha = 1;
+			// fillText('110px Helvetica', 'Circletris', trueCanvas.width/2, trueCanvas.height/2 - 115 * settings.scale)
+			// fillText('40px Helvetica', 'Play!', trueCanvas.width/2, trueCanvas.height/2)
 	}
 	// ctx.fillStyle = '#232323';
 }

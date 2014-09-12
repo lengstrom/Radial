@@ -1,4 +1,4 @@
-function init(a) {
+function init(a, restart) {
 	last = Date.now();
 	cumulativeTime = 0;
 
@@ -24,6 +24,8 @@ function init(a) {
 
 	// only do if restarting the first time
 	if (a) {
+		// document.getElementById('a').addEventListener('mousedown', function(){init(false, true)})
+
 		window.requestAnimFrame = (function() {
 			return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function(callback) {
 				window.setTimeout(callback, 1000 / framerate);
@@ -37,7 +39,7 @@ function init(a) {
 		//input
 		document.addEventListener('keydown', function(e) {
 			if (e.keyCode == 13) {
-				init();
+				init(false, true);
 			} else {
 				keys[e.keyCode] = 1;
 			}
@@ -60,6 +62,15 @@ function init(a) {
 		});
 
 		canvas.addEventListener('mousedown tapstart')
+	}
+
+	if (restart) {
+		document.getElementById('a').style.display = 'none';
+		for (var i = 0; i < blocks.length; i++) {
+			blocks[i].shouldDeleteSelf = 2 * settings.baseDistFromCenter; // covering all the bases
+		}
+
+		gameState = 1;
 	}
 
 	//rendering

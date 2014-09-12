@@ -132,7 +132,6 @@ function TripleGeneration(opts) {
 
 function SpiralGeneration(opts) {
 	this.blocks = [];
-	this.speedModifier = 1;
 	var angle = Math.random() * Math.PI * 2;
 	for (var i in opts) {
 		this[i] = opts[i];
@@ -169,6 +168,7 @@ function AlternateGeneration(opts) {
 	this.blocks = [];
 	this.speedModifier = 1;
 	this.shouldShake = 0;
+	this.shouldDeleteBlocks = 0;
 	this.angle = false;
 	for (var i in opts) {
 		this[i] = opts[i];
@@ -191,13 +191,21 @@ function AlternateGeneration(opts) {
 			var color = colors[Math.floor(Math.random() * colors.length)];
 			for (var i = 0; i < num; i++) {
 				var newBlock = new Block({parent:this, angularWidth:angleMeasure, iter:settings.baseIter, angle:this.angle + i * angleMeasure, color:color, shouldShake:this.shouldShake});
-				this.shouldShake = 1;
-				blocks.push(newBlock);
-				this.blocks.push(newBlock);
-				if (i % 2 == 0) {
-					newBlock.shouldDeleteSelf = settings.baseRadius + (settings.baseDistFromCenter - settings.baseRadius) * (3/4);
+				if (this.shouldDeleteBlocks) {
+					this.shouldShake = 1;
+					blocks.push(newBlock);
+					this.blocks.push(newBlock);
+					if (i % 2 == 0) {
+						newBlock.shouldDeleteSelf = settings.baseRadius + (settings.baseDistFromCenter - settings.baseRadius) * (3/4);
+					} else {
+						newBlock.shouldDeleteSelf = 0;
+					}
 				} else {
-					newBlock.shouldDeleteSelf = false;
+					if (i % 2 != 0) {
+						this.shouldShake = 1;
+						blocks.push(newBlock);
+						this.blocks.push(newBlock);
+					}
 				}
 			}
 		}
@@ -297,9 +305,15 @@ function RandomFastMultipleGeneration(opts) {
 	};
 }
 
-function RotationAugmentation(wave) {
+function RotationAugmentation(wave, opts) {
 	this.wave = wave;
 	this.cumulativeSum = 0;
+	this.anglePerSec = 10;
+	this.speed = 1 || speed;
+	for (var i in opts) {
+		this[i] = opts[i];
+	}
+
 	this.update = function(dt) {
 		this.cumulativeSum += dt;
 		for (var i = 0; i < this.wave.blocks.length; i++) {
@@ -316,11 +330,13 @@ function RotationAugmentation(wave) {
 	};
 }
 
-RotationAugmentation.prototype.anglePerSec = 10;
-
-function SinusoidalYAxisAugmentation(wave) {
+function SinusoidalYAxisAugmentation(wave, opts) {
 	this.wave = wave;
 	this.cumulativeSum = 0;
+	for (var i in opts) {
+		this[i] = opts[i];
+	}
+
 	this.update = function(dt) {
 		this.cumulativeSum += dt;
 		for (var i = 0; i < wave.blocks.length; i++) {
@@ -339,16 +355,14 @@ SinusoidalYAxisAugmentation.prototype.heartBeatMagnitude = 400;
 SinusoidalYAxisAugmentation.prototype.heartBeatSpeedDivisor = 17;
 
 function WaveGen() {
-	this.counter = 0;
-	this.patternQueue = [];
-	this.speedModifier = 1;
-	this.maxSpeedTime = 200;
-	this.patterns = [StartScreen];
-	this.augmentationQueue = [];
-	this.augments = [];
 	this.update = function(dt) {
-		this.speedModifier = 1 - (this.counter)/(this.maxSpeedTime * 60) * .5;
-		this.counter += dt;
+		if (this.shouldSwitch == -9) {
+			this.loadConfig(this.configs[3]);
+		} else if (this.shouldSwitch < 0) {
+			this.loadConfig(this.configs[Math.floor(Math.random() * this.configs.length)]);
+		}
+
+		// this.speedModifier = 1 - (this.counter)/(this.maxSpeedTime * 60) * .5;
 		for (var i = 0; i < this.augmentationQueue.length; i++) {
 			this.augmentationQueue[i].update(dt);
 		}
@@ -356,15 +370,36 @@ function WaveGen() {
 		for (var i = 0; i < this.patternQueue.length; i++) {
 			this.patternQueue[i].update(dt);
 		}
+	};
 
-		if (Math.round(this.counter) > 0) {
-			this.patternQueue.push(this.findPattern());
-			this.augmentationQueue = [new RotationAugmentation(this.patternQueue[0]), new SinusoidalYAxisAugmentation(this.patternQueue[0])];
-			this.counter = -1111111111111;
+	this.loadConfig = function(config) {
+		var generator = new config[0](config.length == 3 ? config[2] : {});
+		this.patternQueue.push(generator);
+		if (config.length > 2) {
+			this.augments.push(new (config[1])(generator));
 		}
-	};
+	}
 
-	this.findPattern = function() {
-		return new (this.patterns[Math.floor(Math.random() * this.patterns.length)])({speedModifier:this.speedModifier});
-	};
+	this.init = function() {
+		this.shouldSwitch = -9;
+		this.counter = 0;
+		this.speedModifier = 1;
+		this.patternQueue = [];
+		this.augmentationQueue = [];
+		this.maxSpeedTime = 200;
+		this.configs = [
+			[SpiralGeneration,RotationAugmentation], 
+			[SpiralGeneration,SinusoidalYAxisAugmentation],
+			[SpiralGeneration,0],
+			[SingleGeneration,0],
+			[DoubleGeneration,0],
+			[TripleGeneration,0],
+			[AlternateGeneration,0],
+			[AlternateGeneration,0,{shouldDeleteBlocks:1}],
+			[RandomSlowMultipleGeneration,0],
+			[RandomFastMultipleGeneration,0]
+		];
+	}
+
+	this.init();
 }

@@ -18,7 +18,6 @@ function Block(opts) {
 
 	this.draw = function() {
 		var op;
-		if (this.shouldDeleteSelf) debugger;
 		switch (this.state) {
 			case 0:
 				drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle - this.angularWidth/2) + (this.angularWidth) * (this.counter/this.initTime), (this.angle - this.angularWidth/2), this.blockHeight, this.distFromCenter + gdr, this.color);
@@ -87,7 +86,7 @@ function Block(opts) {
 				}
 
 				if (this.distFromCenter <= settings.startRadius) {
-					this.state = 3;
+					this.state = 2;
 				}
 				break;
 		}
