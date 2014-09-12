@@ -77,7 +77,8 @@ function Player(opts) {
 			}
 		}
 
-		if (Math.abs(this.angularVelocity) > this.MaxAngularVelocity) {
+		console.log(this.angularVelocity);
+		if (Math.abs(this.angularVelocity) > this.maxAngularVelocity) {
 			this.angularVelocity = this.maxAngularVelocity * (this.angularVelocity < 0 ? -1 : 1);
 		}
 
@@ -92,9 +93,9 @@ function Player(opts) {
 		}
 
 		var players = [player1];
-			if ('player2' in window) {
-				players.push(player2);
-			}
+		if ('player2' in window) {
+			players.push(player2);
+		}
 
 		for(var x = 0; x < players.length; x++ ){
 			if(isPLayerTouchingPlayer(this, players[x]) && this !== players[x]){
@@ -102,8 +103,7 @@ function Player(opts) {
 				this.angularVelocity = 0;
 			}
 		}
-		
-		
+
 		this.radius = settings.baseRadius + this.yOffset;
 		
 		for(var x = 0; x < players.length; x++ ){
@@ -113,6 +113,7 @@ function Player(opts) {
 				this.angularVelocity = 0;
 			}
 		}
+
 		var twoPI = Math.PI * 2;
 		if (this.angle < 0) this.angle += twoPI;
 		if (this.angle > twoPI) this.angle -= twoPI;
@@ -123,7 +124,8 @@ function Player(opts) {
 		for (var i = 0; i < this.bodies.length; i++) {
 			var angle = this.bodies[i] + this.angle;
 			var ss = settings.scale;
-			
+
+
 			//console.log("Begin Draw Cone");
 			//console.log("gdr: " +  gdr);
 
