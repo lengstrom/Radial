@@ -1,3 +1,5 @@
+
+
 function drawConeSectionFromCenter(cx, cy, startAngle, endAngle, blockHeight, distance, color, op) {
 	if (distance <= settings.baseRadius + .00000001) {
 		cx += gdx;
