@@ -1,7 +1,7 @@
 function Player(opts) {
 	this.renderColor = "#232323";
 	this.sideLength = 22;
-	this.keyBindings = [37, 39, 38]; //left / right arrow keys
+	this.keyBindings = [37, 39, 38]; //left / right arrow keys	
 	this.jumps = 0;
 	this.angle = 0;
 	this.angularWidth = .2;
@@ -50,8 +50,8 @@ function Player(opts) {
 
 			keys[this.keyBindings[2]] = 0;
 		}
-
-		if (keys[this.keyBindings[0]]) {
+		//if (right == true)debugger;
+		if (keys[this.keyBindings[0]] || right) {
 			if (this.angularVelocity > 4 * normalizedAcceleration) {
 				this.angularVelocity -= 4 * normalizedAcceleration;
 			} else if (this.angularVelocity > 0) {
@@ -61,7 +61,7 @@ function Player(opts) {
 			}
 		}
 
-		if (keys[this.keyBindings[1]]) {
+		if (keys[this.keyBindings[1]] || left) {
 			if (this.angularVelocity < -4 * normalizedAcceleration) {
 				this.angularVelocity += 4 * normalizedAcceleration;
 			} else if (this.angularVelocity < 0) {

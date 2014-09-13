@@ -15,6 +15,8 @@ function init(a, restart) {
 		shakeMagnitude:20 * (window.devicePixelRatio ? window.devicePixelRatio : 1),
 		baseIter:5
 	};
+	left = false;
+	right = false;
 	endCt = 0;
 	colors = ["#e74c3c", "#f1c40f", "#3498db"];
 	score = 0;
@@ -63,7 +65,25 @@ function init(a, restart) {
 			keys[e.keyCode] = 0;
 		});
 
-		canvas.addEventListener('mousedown tapstart')
+		canvas.addEventListener('mousedown tapstart');
+		document.addEventListener("mousedown", function(e) {
+			console.log("touch down");
+			if(e.x < trueCanvas.width/2){
+				left = true;
+				console.log("left");
+			}
+			if(e.x > trueCanvas.width/2){
+				right = true;		
+				console.log("right");				
+			}
+		});
+
+		canvas.addEventListener("mouseup", function(e) {
+			console.log("touch up");
+			left = false;
+			right = false;
+
+		});
 	}
 
 	if (restart) {
