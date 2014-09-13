@@ -101,8 +101,8 @@ function render() {
 				var op = (initText - 50)/50;
 				if (op > 1) op = 1;
 				ctx.globalAlpha = op;
-				fillText('40px Helvetica', settings.mobile ? 'Touch the left and right sides of the screen to move' : 'Use the arrow keys to move left and right!', trueCanvas.width/2, trueCanvas.height/2 - 200, 0);
-				fillText('40px Helvetica', 'Avoid touching the (elemental) blocks!', trueCanvas.width/2, trueCanvas.height/2 - 150, 0);
+				fillText('30px Helvetica', settings.mobile ? 'Touch the left and right sides of the screen to move' : 'Use the arrow keys to move left and right!', trueCanvas.width/2, trueCanvas.height/2 - 170 * settings.scale, 0);
+				fillText('30px Helvetica', 'Avoid touching the (elemental) blocks!', trueCanvas.width/2, trueCanvas.height/2 - 130 * settings.scale, 0);
 				ctx.globalAlpha = 1;
 				initText--;
 			}
@@ -116,7 +116,7 @@ function render() {
 			ctx.fillRect(0, 0, trueCanvas.width, trueCanvas.height);
 			fillText('90px Helvetica', 'Game over', trueCanvas.width/2, trueCanvas.height/2 - 75 * settings.scale);
 			fillText('50px Helvetica', 'Score: ' + score, trueCanvas.width/2, trueCanvas.height/2);
-			fillText('30px Helvetica', 'Hit enter to restart!', trueCanvas.width/2, trueCanvas.height/2 + 60 * settings.scale);
+			fillText('30px Helvetica', settings.mobile ? 'Tap to restart!' : 'Hit enter to restart!', trueCanvas.width/2, trueCanvas.height/2 + 60 * settings.scale);
 			ctx.globalAlpha = 1;
 			break;
 	}

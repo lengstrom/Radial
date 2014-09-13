@@ -27,20 +27,18 @@ function Player(opts) {
 		var normalizedAcceleration = dt * this.acceleration;
 
 		for (var x = 0; x < blocks.length; x++ ){
-			 //console.log(blocks[x].distFromCenter)
 			//debugger;
 			if (blocks[x].state == 1 && isPlayerTouchingBlock(this, blocks[x])){
 
 				endGame();
 				//blocks[x].state = 3;
-				//console.log("touch!");
 			}			
 			else {
-				//console.log("no touch!");
 			}
 		}
 
-
+		var shouldLeft = keys[this.keyBindings[1]] || right;
+		var shouldRight = keys[this.keyBindings[0]] || left;
 
 		if (keys[this.keyBindings[2]]) {
 			if (this.jumps < this.maxJumps) {
@@ -51,7 +49,7 @@ function Player(opts) {
 			keys[this.keyBindings[2]] = 0;
 		}
 		//if (right == true)debugger;
-		if (keys[this.keyBindings[0]] || right) {
+		if (shouldRight) {
 			if (this.angularVelocity > 4 * normalizedAcceleration) {
 				this.angularVelocity -= 4 * normalizedAcceleration;
 			} else if (this.angularVelocity > 0) {
@@ -61,7 +59,7 @@ function Player(opts) {
 			}
 		}
 
-		if (keys[this.keyBindings[1]] || left) {
+		if (shouldLeft) {
 			if (this.angularVelocity < -4 * normalizedAcceleration) {
 				this.angularVelocity += 4 * normalizedAcceleration;
 			} else if (this.angularVelocity < 0) {
@@ -71,11 +69,10 @@ function Player(opts) {
 			}
 		}
 
-		if (!keys[this.keyBindings[1]] && !keys[this.keyBindings[0]]) {
-				this.angularVelocity *= this.angularDeceleration*dt;
+		if (!shouldLeft && !shouldRight) {
+			this.angularVelocity *= this.angularDeceleration*dt;
 		}
 
-		// console.log(this.angularVelocity);
 		if (Math.abs(this.angularVelocity) > this.maxAngularVelocity) {
 			this.angularVelocity -= this.recoveryDeceleration * dt * (this.angularVelocity < 0 ? -1 : 1);
 		}
@@ -97,7 +94,6 @@ function Player(opts) {
 
 		for(var x = 0; x < players.length; x++ ){
 			if(isPLayerTouchingPlayer(this, players[x]) && this !== players[x]){
-				// console.log("P1/P2 Touching");
 				//this.angularVelocity = -this.angularVelocity*2;
 			}
 		}
@@ -106,7 +102,6 @@ function Player(opts) {
 		
 		for(var x = 0; x < players.length; x++ ){
 			if(isPLayerTouchingPlayer(this, players[x]) && this !== players[x]){
-				// console.log("P1/P2 Touching");
 				this.angle -= this.angularVelocity * dt;
 				this.angularVelocity = -this.angularVelocity*2;
 				players[x].angularVelocity = -this.angularVelocity*2;
@@ -125,15 +120,12 @@ function Player(opts) {
 			var ss = settings.scale;
 
 
-			//console.log("Begin Draw Cone");
-			//console.log("gdr: " +  gdr);
 
 			//Figure out proper angle for height.
 			/*
 			var trueWidth = 1; //how many radians wide it is at baseradius
 			var floorRadius = (settings.baseRadius + gdr);
 			var floorCircumference = (floorRadius)*6.28;
-			console.log("floorCircumference " + isNaN(floorCircumference));
 			var percentageOfCircle = trueWidth/floorCircumference;
 
 			//converttowidth
@@ -144,23 +136,17 @@ function Player(opts) {
 			var topY = floorRadius * Math.sin(angle-1/2);
 
 			distBetweenPoints = Math.sqrt((topY-bottomY)*(topY-bottomY) + (topX-bottomX)*(topX-bottomX));
-			console.log("TrueWidth" + distBetweenPoints);
 
 			var bottomDistanceMax = Math.sqrt(bottomX^2 + bottomY^2);
 			var DistanceMax = Math.sqrt(topX^2 + topY^2);
 
-			console.log("bottom: (" + bottomX + " " + bottomY + "), top : (" + topX + " " + topY + ")");
-			console.log("percentageOfCircle " + isNaN(percentageOfCircle));
 			var currentCircumference = this.radius*6.28;
-			console.log("currentCircumference " + currentCircumference);
 			var finalWidth = currentCircumference*percentageOfCircle;
-			console.log("finalWidth: " + finalWidth);
 			finalWidth = finalWidth/2;
 			if(this.radius > 140) debugger;
 			*/
 
 			drawConeSectionFromCenter(trueCanvas.width/2, trueCanvas.height/2, (this.angle + this.angularWidth/2), (this.angle - this.angularWidth/2), this.sideLength, this.radius + gdr, this.color);
-			//console.log("End Draw Cone");
 			
 			//drawRect(trueCanvas.width/2 + ss * Math.cos(angle) * this.radius + (-this.sideLength/2) * Math.sin(2 * Math.PI - angle) * ss, trueCanvas.height/2 + Math.sin(angle) * this.radius * ss + (-this.sideLength/2) * Math.cos(2 * Math.PI - angle) * ss, this.sideLength, this.color, angle, (this.yOffset == 0));
 		}

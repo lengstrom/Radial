@@ -29,7 +29,12 @@ function init(a, restart) {
 
 	// only do if restarting the first time
 	if (a) {
-		document.getElementById('a').addEventListener('mousedown', function(){init(0, 1)})
+		if (settings.mobile) {
+			document.getElementById('a').addEventListener('touchstart', function(){init(0, 1)})
+		} else {
+			document.getElementById('a').addEventListener('mousedown', function(){init(0, 1)})
+		}
+
 		window.requestAnimFrame = (function() {
 			return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function(callback) {
 				window.setTimeout(callback, 1000 / framerate);
@@ -41,13 +46,19 @@ function init(a, restart) {
 		ctx = canvas.getContext('2d');
 
 		//input
-		document.addEventListener('keydown', function(e) {
-			if (e.keyCode == 13) {
-				init(0, 1);
-			} else {
-				keys[e.keyCode] = 1;
-			}
-		});
+		if (!settings.mobile) {
+			document.addEventListener('keydown', function(e) {
+				if (e.keyCode == 13) {
+					init(0, 1);
+				} else {
+					keys[e.keyCode] = 1;
+				}
+			});
+		} else {
+			document.addEventListener('touchstart', function(e) {
+				if (gameState != 2) init(0, 1);
+			});
+		}
 
 		window.addEventListener('blur', function(e) {
 			for (var i = 0; i < keys.length; i++) {
@@ -65,25 +76,25 @@ function init(a, restart) {
 			keys[e.keyCode] = 0;
 		});
 
-		canvas.addEventListener('mousedown tapstart');
-		document.addEventListener("mousedown", function(e) {
-			console.log("touch down");
-			if(e.x < trueCanvas.width/2){
-				left = true;
-				console.log("left");
-			}
-			if(e.x > trueCanvas.width/2){
-				right = true;		
-				console.log("right");				
-			}
-		});
+		if (settings.mobile) {
+			window.addEventListener("touchstart", function(e) {
+				if (gameState == 2) {
+					var cx = e.changedTouches[0].clientX;
+					if(cx < trueCanvas.width/2){
+						left = true;
+					}
+					if(cx > trueCanvas.width/2){
+						right = true;
+					}
+				}
+			});
 
-		canvas.addEventListener("mouseup", function(e) {
-			console.log("touch up");
-			left = false;
-			right = false;
+			window.addEventListener("touchend", function(e) {
+				left = false;
+				right = false;
 
-		});
+			});
+		}
 	}
 
 	if (restart) {

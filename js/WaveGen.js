@@ -263,7 +263,6 @@ function RandomSlowMultipleGeneration(opts) {
 			}
 		} else {
 			if (this.counter > 100 * this.speedModifier && !this.stopped) {
-				debugger;
 				this.makeBlockSet();
 			}
 		}
@@ -399,10 +398,6 @@ SinusoidalYAxisAugmentation.prototype.heartBeatSpeedDivisor = 17;
 
 function WaveGen() {
 	this.update = function(dt) {
-		if ('initText' in window) {
-			debugger;
-		}
-
 		if (this.shouldSwitch == -999999 && (!('initText' in window) || initText <= 100)) {
 			if (gameState == 0) {
 				this.loadConfig([StartScreen, RotationAugmentation]);

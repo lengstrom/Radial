@@ -3,10 +3,6 @@ function isPlayerTouchingBlock(player, block){
 	
 
 	/*
-	console.log("Blocks.length" + blocks.length);
-	console.log("Base Radius:" + window.settings.baseRadius);
-	console.log("Player yOffset:" + player.yOffset);
-	console.log("SideLength:" + player.sideLength);
 	*/
 	var playerHeightBottom = player.yOffset + window.settings.baseRadius;
 	var playerHeightTop = playerHeightBottom + player.sideLength;
@@ -34,22 +30,15 @@ function isPlayerTouchingBlock(player, block){
 	}
 
 	/*
-	console.log("playerHeightBottom:" + playerHeightBottom);
-	console.log("playerHeightTop:" + playerHeightTop);
-	console.log("block.distFromCenter:" + block.distFromCenter);
 	*/
 
 	//*@Meadow
-	//console.log("blockTopAngle: " + blockTop%6.28);
-	//console.log("blockBottomAngle: " + blockBottom%6.28);
-	//console.log("player.angle: " + player.angle%6.28); 
 	//*/
 	if (block.distFromCenter >= playerHeightBottom && block.distFromCenter <= playerHeightTop){ //Vertical Match
 		if((playerBottom < blockTop && playerTop > blockTop)
 		||(playerBottom < blockBottom && playerTop > blockBottom)
 		||(playerBottom > blockBottom && playerTop < blockTop)){//Horizontal Match
 			(player.color == "#FFFFFF") ? player.color = "#000000" : player.color = "#FFFFFF";
-			 console.log("HIT!");
 			 	//debugger;
 			return true;	
 		}  
@@ -71,11 +60,7 @@ function isPLayerTouchingPlayer(player1, player2) {
 	var player2Top = player2.angle + player2.angularWidth/2;
 	var player2Bottom = player2.angle - player2.angularWidth/2;
 
-	// console.log("player1Top: " + player1Top);
-	// console.log("player1Bottom: " + player1Bottom);
 
-	// console.log("player2Top: " + player2Top);
-	// console.log("player2Bottom: " + player2Bottom);
 
 	if ((player1HeightBottom >= player2HeightBottom && player1HeightBottom <= player2HeightTop)
 		|| (player2HeightBottom >= player1HeightBottom && player2HeightBottom <= player1HeightTop)){//Heights overlap one way or another
@@ -102,11 +87,7 @@ function isPLayerTouchingPlayer(player1, player2) {
 	var player2Top = player2.angle + player2.angularWidth/2;
 	var player2Bottom = player2.angle - player2.angularWidth/2;
 	/*
-	console.log("player1Top: " + player1Top);
-	console.log("player1Bottom: " + player1Bottom);
 
-	console.log("player2Top: " + player2Top);
-	console.log("player2Bottom: " + player2Bottom);
 	*/
 	//Touching bottom
 	/*
@@ -114,7 +95,6 @@ function isPLayerTouchingPlayer(player1, player2) {
 		//Coming from bottom
 		if((player1Top >= player2Bottom && player1Top <= player2Top) 
 			||(player2Top >= player1Bottom && player2Top <= player1Top)){
-				// console.log("bottom connect");
 					//debugger;
 			} //Angles overlap one way or another
 	}
@@ -123,7 +103,6 @@ function isPLayerTouchingPlayer(player1, player2) {
 		//Coming from top
 		if((player1Top >= player2Bottom && player1Top <= player2Top) 
 			||(player2Top >= player1Bottom && player2Top <= player1Top)){
-				// console.log("top connect");
 						//debugger;
 			} //Angles overlap one way or another
 		
