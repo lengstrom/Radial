@@ -100,6 +100,7 @@ function init(a, restart) {
 	if (restart) {
 		initText = 0;
 		if (ft) initText = 200;
+		if (!ft) blocks = [];
 		document.getElementById('a').style.display = 'none';
 		for (var i = 0; i < blocks.length; i++) {
 			blocks[i].shouldDeleteSelf = 2 * settings.baseDistFromCenter; // covering all the bases
