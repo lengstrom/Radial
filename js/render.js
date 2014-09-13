@@ -92,7 +92,7 @@ function render() {
 			ctx.fillStyle = '#000';
 			ctx.fillRect(0, 0, c.height, c.width);
 			ctx.globalAlpha = 1;
-			fillText('110px Helvetica', 'Centris', trueCanvas.width/2, trueCanvas.height/2 - 115 * settings.scale);
+			fillText('110px Helvetica', 'Radial', trueCanvas.width/2, trueCanvas.height/2 - 115 * settings.scale);
 			fillText('40px Helvetica', 'Play!', trueCanvas.width/2, trueCanvas.height/2);
 			break;
 
