@@ -32,6 +32,7 @@ function Player(opts) {
 			if (blocks[x].state == 2 && isPlayerTouchingBlock(this, blocks[x])){
 
 				endGame();
+				blocks[x].state = 3;
 				//console.log("touch!");
 			}			
 			else {
@@ -71,12 +72,12 @@ function Player(opts) {
 		}
 
 		if (!keys[this.keyBindings[1]] && !keys[this.keyBindings[0]]) {
-				this.angularVelocity *= .75*dt;
+				this.angularVelocity *= this.angularDeceleration*dt;
 		}
 
 		// console.log(this.angularVelocity);
 		if (Math.abs(this.angularVelocity) > this.maxAngularVelocity) {
-			this.angularVelocity -= this.angularDeceleration * dt * (this.angularVelocity < 0 ? -1 : 1);
+			this.angularVelocity -= this.recoveryDeceleration * dt * (this.angularVelocity < 0 ? -1 : 1);
 		}
 
 		this.angle += this.angularVelocity * dt;
@@ -171,4 +172,6 @@ function Player(opts) {
 Player.prototype.jumpForce = 16;
 Player.prototype.maxJumps = 3;
 Player.prototype.maxAngularVelocity = 5/180 * Math.PI;
-Player.prototype.angularDeceleration = 1/180 * Math.PI;
+Player.prototype.angularDeceleration = 0; //.75 is best
+Player.prototype.bounce = 0;
+Player.prototype.recoveryDeceleration = 1/180 * Math.PI;
