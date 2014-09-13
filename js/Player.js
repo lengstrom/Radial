@@ -29,10 +29,10 @@ function Player(opts) {
 		for (var x = 0; x < blocks.length; x++ ){
 			 //console.log(blocks[x].distFromCenter)
 			//debugger;
-			if (blocks[x].state == 2 && isPlayerTouchingBlock(this, blocks[x])){
+			if (blocks[x].state == 1 && isPlayerTouchingBlock(this, blocks[x])){
 
 				endGame();
-				blocks[x].state = 3;
+				//blocks[x].state = 3;
 				//console.log("touch!");
 			}			
 			else {
