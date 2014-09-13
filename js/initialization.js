@@ -7,6 +7,7 @@ function init(a, restart) {
 		startRadius:110,
 		baseRadius:110,
 		scale:1,
+		mobile:/Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
 		initTime:20,
 		baseDistFromCenter:400,
 		shakeMagnitude:20 * (window.devicePixelRatio ? window.devicePixelRatio : 1),
