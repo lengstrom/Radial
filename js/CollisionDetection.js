@@ -1,5 +1,4 @@
 function isPlayerTouchingBlock(player, block){	
-	console.log("collision detection begin");
 	if (block != null){
 	
 

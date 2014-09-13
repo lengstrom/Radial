@@ -1,5 +1,3 @@
-
-
 function drawConeSectionFromCenter(cx, cy, startAngle, endAngle, blockHeight, distance, color, op) {
 	if (distance <= settings.baseRadius + .00000001) {
 		cx += gdx;
@@ -90,8 +88,8 @@ function render() {
 
 	switch (gameState) {
 		case 0:
-			ctx.globalAlpha = .3;
-			ctx.fillStyle = '#ecf0f1';
+			ctx.globalAlpha = .7;
+			ctx.fillStyle = '#000';
 			ctx.fillRect(0, 0, c.height, c.width);
 			ctx.globalAlpha = 1;
 			fillText('110px Helvetica', 'Centris', trueCanvas.width/2, trueCanvas.height/2 - 115 * settings.scale);
@@ -99,6 +97,15 @@ function render() {
 			break;
 
 		case 2:
+			if ('initText' in window && initText - 50 > 0) {
+				var op = (initText - 50)/50;
+				if (op > 1) op = 1;
+				ctx.globalAlpha = op;
+				fillText('40px Helvetica', settings.mobile ? 'Touch the left and right sides of the screen to move' : 'Use the arrow keys to move left and right!', trueCanvas.width/2, trueCanvas.height/2 - 200, 0);
+				fillText('40px Helvetica', 'Avoid touching the (elemental) blocks!', trueCanvas.width/2, trueCanvas.height/2 - 150, 0);
+				ctx.globalAlpha = 1;
+				initText--;
+			}
 			fillText('40px Helvetica', score, trueCanvas.width/2, trueCanvas.height/2);
 			break;
 
@@ -115,12 +122,18 @@ function render() {
 	}
 }
 
-function fillText(font, name, x, y) {
+function fillText(font, name, x, y, ngd) {
 	ctx.save();
 	ctx.scale(settings.scale,settings.scale);
 	ctx.fillStyle = '#ecf0f1';
+	var tgdy = 0;
+	var tgdx = 0;
+	if (ngd) {
+		tgdx = gdx;
+		tgdy = gdy;
+	}
 	ctx.textBaseline = 'middle';
 	ctx.font = font;
-	ctx.fillText(name, (x - ((ctx.measureText(name).width) * settings.scale)/2) / settings.scale + gdx * settings.scale, y/settings.scale + gdy * settings.scale);
+	ctx.fillText(name, (x - ((ctx.measureText(name).width) * settings.scale)/2) / settings.scale + tgdx * settings.scale, y/settings.scale + tgdy * settings.scale);
 	ctx.restore();
 }

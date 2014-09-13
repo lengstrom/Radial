@@ -399,14 +399,18 @@ SinusoidalYAxisAugmentation.prototype.heartBeatSpeedDivisor = 17;
 
 function WaveGen() {
 	this.update = function(dt) {
-		if (this.shouldSwitch == -999999) {
+		if ('initText' in window) {
+			debugger;
+		}
+
+		if (this.shouldSwitch == -999999 && (!('initText' in window) || initText <= 100)) {
 			if (gameState == 0) {
 				this.loadConfig([StartScreen, RotationAugmentation]);
 			}
 			else {
 				this.loadConfig(this.configs[3]);
 			}
-		} else if (gameState != 0 && this.shouldSwitch < 0) {
+		} else if (gameState != 0 && this.shouldSwitch < 0 && (initText < 50 || !('initText' in window))) {
 			if (this.continueRemovingBlocks()) {
 				this.loadConfig(this.configs[Math.floor(this.configs.length * Math.random())]);
 			}
