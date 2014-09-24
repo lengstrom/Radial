@@ -18,8 +18,8 @@ function init(a, restart) {
 	left = false;
 	right = false;
 	endCt = 0;
-	colors = ["#e74c3c", "#ecf0f1", "#3498db", "#db8835"];
 	score = 0;
+    colors = ["#e74c3c", "#f1c40f", "#3498db"];
 	shakes = [];
 	gdx = 0;
 	gdr = 0;
