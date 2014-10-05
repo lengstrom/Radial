@@ -405,10 +405,13 @@ function WaveGen() {
 			else {
 				this.loadConfig(this.configs[Math.floor(this.configs.length * Math.random())]);
 			}
-		} else if (gameState != 0 && this.shouldSwitch < 0 && (initText < 50 || !('initText' in window))) {
+		} else if (gameState != 0 && this.shouldSwitch < 0 && (!('initText' in window) || initText <= 50 )) {
+			debugger;
 			if (this.continueRemovingBlocks()) {
 				this.loadConfig(this.configs[Math.floor(this.configs.length * Math.random())]);
 			}
+		} else {
+			debugger;
 		}
 
 		// this.speedModifier = 1 - (this.counter)/(this.maxSpeedTime * 60) * .5;
