@@ -403,7 +403,7 @@ function WaveGen() {
 				this.loadConfig([StartScreen, RotationAugmentation]);
 			}
 			else {
-				this.loadConfig(this.configs[3]);
+				this.loadConfig(this.configs[Math.floor(this.configs.length * Math.random())]);
 			}
 		} else if (gameState != 0 && this.shouldSwitch < 0 && (initText < 50 || !('initText' in window))) {
 			if (this.continueRemovingBlocks()) {

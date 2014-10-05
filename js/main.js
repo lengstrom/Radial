@@ -1,6 +1,6 @@
 function animLoop() {
 	var now = Date.now();
-	var dt = (now - last)/16.66666666666666;
+	var dt = (now - last)/16.66666666666666 * (.8);
 	switch (gameState) {
 		case 0: //main menu
 			score = parseInt(((Date.now() - settings.startTime)/60)/4, 10);
