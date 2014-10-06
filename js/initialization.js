@@ -29,6 +29,14 @@ function init(a, restart) {
 
 	// only do if restarting the first time
 	if (a) {
+        document.ontouchstart = function(e){ 
+            e.preventDefault(); 
+        }
+        
+        window.ontouchstart = function(e){ 
+            e.preventDefault(); 
+        }
+
 		if (settings.mobile) {
 			document.getElementById('a').addEventListener('touchstart', function(){init(0, 1)})
 		} else {
